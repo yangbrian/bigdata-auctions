@@ -8,11 +8,15 @@ var con = sql.createConnection({
     database: 'test'
 });
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.get('/', function(err, req, res) {
     con.query('SHOW TABLES', function(err, rows) {
         console.log(rows);
     });
-    return 'Hello world';
+    res.send('Hello world!');
 });
 
 var server = app.listen(3000, function() {
