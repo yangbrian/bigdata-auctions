@@ -9,8 +9,8 @@ var con = sql.createConnection({
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'ejs');
 
 app.get('/', function(err, req, res) {
     con.query('SHOW TABLES', function(err, rows) {
