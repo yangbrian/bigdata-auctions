@@ -1,0 +1,31 @@
+<!-- Auction Page -->
+
+<% include partials/header %>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <p class="lead"><%= auction.Name %></p>
+
+            <p class="description">
+                Just displaying all the info. Will style later.
+            </p>
+
+            <ul>
+                <li>Description: <%= auction.Description %></li>
+                <li>NumCopies: <%- auction.NumCopies %></li>
+                <li>Current: <%= auction.MinimuBid %></li>
+                <li>Increment: <%= auction.BidIncrement %></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<% include partials/footer %>
