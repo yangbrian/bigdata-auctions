@@ -22,3 +22,7 @@ a {
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav>li>a:hover {
     color: rgba(255, 255, 255, 0.4);
 }
+
+.auction-end {
+    font-weight: 700;
+}

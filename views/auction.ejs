@@ -25,8 +25,9 @@
             <ul>
                 <li>Description: <%= auction.Description %></li>
                 <li>NumCopies: <%- auction.NumCopies %></li>
-                <li>Current: <%= auction.MinimuBid %></li>
-                <li>Increment: <%= auction.BidIncrement %></li>
+                <li>Current Bid: $<%= auction.MinimumBid %></li>
+                <li>Minimum Increment: $<%= auction.BidIncrement %></li>
+                <li>Reserve Price: $<%= auction.ReservePrice %></li>
             </ul>
         </div>
 

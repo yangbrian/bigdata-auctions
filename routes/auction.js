@@ -3,18 +3,10 @@ var router = express.Router();
 
 var db = require('../database.js').db;
 
-/* Get home page */
+/* /auction home page */
 router.get('/', function (req, res, next) {
 
-    // get list of auctions and pass it to "index" template
-    db.query('SELECT * FROM auction', function(err, rows){
-        if(err) throw err;
-
-        res.render('index', {
-            title: 'Big Data Auction House',
-            auctions: rows
-        });
-    });
+    res.send('This page does nothing right now. Please enter an ID');
 });
 
 /**
@@ -23,11 +15,11 @@ router.get('/', function (req, res, next) {
 router.get('/:id', function (req, res) {
     db.query(
         'SELECT * FROM auction ' +
-        'INNER JOIN item ' +
-        'ON auction.ItemID = item.ItemID ' +
-        'WHERE AuctionId=' + req.params.id,
+        'INNER JOIN item ON auction.ItemID = item.ItemID ' +
+        'INNER JOIN post ON auction.AuctionID = post.AuctionID ' +
+        'WHERE auction.AuctionId=' + req.params.id,
 
-        function(err, rows) {
+        function (err, rows) {
 
             if (err || rows.length == 0) {
                 res.end('temporary error page - no such auction by id ' + req.params.id);
@@ -48,12 +40,8 @@ router.get('/:id', function (req, res) {
 /**
  * POST Request to create a new auction
  *
- * Form data will contain:
- *    - Item Name
- *    - Item Type
- *    - Item Quantity
- *    - Minimum Bid
- *    - Bid Increment
+ * Form submits here and data is in req.body.hello
+ * Where hello is the value of the HTML 'name' attribute of each input field
  *
  */
 router.post('/new', function (req, res) {
