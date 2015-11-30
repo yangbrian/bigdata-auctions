@@ -2,9 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../database.js').db;
+var auth = require('../database.js').auth;
 
 /* /auction home page */
-router.get('/', function (req, res, next) {
+router.get('/', auth, function (req, res, next) {
 
     res.send('This page does nothing right now. Please enter an ID');
 });
@@ -12,7 +13,7 @@ router.get('/', function (req, res, next) {
 /**
  * Get Auction by ID and display the listing page
  */
-router.get('/:id', function (req, res) {
+router.get('/:id', auth, function (req, res) {
     db.query(
         'SELECT * FROM auction ' +
         'INNER JOIN item ON auction.ItemID = item.ItemID ' +
@@ -28,6 +29,7 @@ router.get('/:id', function (req, res) {
 
             res.render('auction', {
                 title: 'Viewing Auction ' + req.params.id,
+                user: req.user,
                 auction: rows[0], // should only return one row
                 post: req.query.post ? true : false // show the new auction success alert
             });
@@ -44,7 +46,7 @@ router.get('/:id', function (req, res) {
  * Where hello is the value of the HTML 'name' attribute of each input field
  *
  */
-router.post('/new', function (req, res) {
+router.post('/new', auth, function (req, res) {
     // first add the item
     db.query('INSERT INTO item (Description, Name, Type, NumCopies)' +
         'VALUES (?, ?, ?, ?)', [req.body.description, req.body.name, req.body.type, req.body.copies],
