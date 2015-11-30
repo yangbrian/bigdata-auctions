@@ -1,0 +1,38 @@
+<!-- Auction Page -->
+
+<% include partials/header %>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <% if (post) { %>
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Your new auction has been listed!
+            </div>
+            <% } %>
+
+            <p class="lead"><%= auction.Name %></p>
+
+            <p class="description">
+                Just displaying all the info. Will style later.
+            </p>
+
+            <ul>
+                <li>Description: <%= auction.Description %></li>
+                <li>NumCopies: <%- auction.NumCopies %></li>
+                <li>Current: <%= auction.MinimuBid %></li>
+                <li>Increment: <%= auction.BidIncrement %></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<% include partials/footer %>
