@@ -19,16 +19,10 @@ a {
     color: #fff;
 }
 
-.aligning{
-    float: left;
-}
-
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav>li>a:hover {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.dropdown{
-    display:inline-block;
-    position:relative;
-    float: right;
+.auction-end {
+    font-weight: 700;
 }

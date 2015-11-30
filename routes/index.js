@@ -10,14 +10,19 @@ var db = require('../database.js').db;
 router.get('/', function (req, res, next) {
 
     // get list of auctions and pass it to "index" template
-    db.query('SELECT * FROM auction', function(err, rows){
-        if(err) throw err;
+    db.query('SELECT * FROM auction ' +
+        'INNER JOIN item on auction.ItemID = item.ItemID ' +
+        'INNER JOIN post on auction.AuctionID = post.AuctionID ' +
+        'ORDER BY ExpireDate',
+        function(err, rows){
+            if(err) throw err;
 
-        res.render('index', {
-            title: 'Big Data Auction House',
-            auctions: rows
-        });
-    });
+            res.render('index', {
+                title: 'Big Data Auction House',
+                auctions: rows
+            });
+        }
+    );
 });
 
 module.exports = router;
