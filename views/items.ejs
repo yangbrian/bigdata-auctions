@@ -1,0 +1,37 @@
+<!-- Auction Page -->
+
+<% include partials/header %>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="col-md-6">
+                <h3>List of items</h3>
+                <table class="table-hover table table-striped">
+                    <thead>
+                    <td>ItemID</td>
+                    <td>Description</td>
+                    <td>Name</td>
+                    <td>Type</td>
+                    <td>NumCompies</td>
+                    </thead>
+                    <% for (var i = 0; i < items.length; i++) {%>
+
+                    <tr>
+                        <td><%= items[i].ItemID %></td>
+                        <td><%= items[i].Description %></td>
+                        <td><%= items[i].Name %></td>
+                        <td><%= items[i].Type %></td>
+                        <td><%= items[i].NumCopies %></td>
+                    </tr>
+
+                    <% } %>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -24,6 +24,8 @@ var users = require('./routes/users');
 var auction = require('./routes/auction');
 var customers = require('./routes/customer');
 var db = require('./database.js').db;
+var items = require('./routes/items');
+
 
 var app = express();
 app.use(flash());
@@ -60,6 +62,8 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
 app.use('/customer32', customers);
+app.use('/items',items);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

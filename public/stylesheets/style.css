@@ -1,5 +1,7 @@
 body {
     font: 14px "Titillium Web", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -25,4 +27,8 @@ a {
 
 .auction-end {
     font-weight: 700;
+}
+
+ul#user-info {
+    list-style: none;
 }
