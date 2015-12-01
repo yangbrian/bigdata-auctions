@@ -1,0 +1,29 @@
+<% include partials/header %>
+
+<div>
+
+    <table class = "table" data-toggle="modal" data-target=".bs-example-modal-lg">
+
+    <% for (var i = 0; i < customers.length; i++) { %>
+    <tr class='clickable-row' data-href='url://link-for-first-row/'>
+        <td><%= customers[i].LastName %></td>
+        <td><%=customers[i].FirstName%></td>
+        <td><%=customers[i].Address%></td>
+    </tr>
+
+    <% } %>
+
+    </table>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<% include partials/footer %>

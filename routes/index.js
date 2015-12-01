@@ -18,7 +18,7 @@ router.get('/', auth, function (req, res, next) {
         'INNER JOIN post on auction.AuctionID = post.AuctionID ' +
         'ORDER BY ExpireDate',
         function(err, rows){
-            if(err) throw err;
+          //  if(err) console.log(err);
 
             res.render('index', {
                 title: 'Big Data Auction House',
