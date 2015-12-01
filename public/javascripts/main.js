@@ -20,4 +20,19 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#bid-auction').on('submit', function (e) {
+        e.preventDefault();
+
+        $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {
+            if (data.success) {
+                $('#new-bid-alert').fadeIn();
+                setTimeout(function() {
+                    location.reload();
+                }, 500);
+            } else {
+                console.log("FAIL");
+            }
+        });
+    })
 });

@@ -1,0 +1,38 @@
+<% include partials/header %>
+
+
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <% if (message && message != '') { %>
+                <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+
+            <p>All passwords are 'hello' without the quotes right now. Try test@test.com</p>
+
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label class="control-label">Email:</label>
+                    <input class="form-control" type="text" name="username"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Password:</label>
+                    <input class="form-control" type="password" name="password" placeholder="All passwords hello right now."/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Log In" class="btn btn-primary" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<% include partials/footer %>

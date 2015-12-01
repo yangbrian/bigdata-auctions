@@ -16,24 +16,67 @@
             </div>
             <% } %>
 
-            <p class="lead"><%= auction.Name %></p>
+            <div class="col-md-9">
+                <p class="lead"><%= auction.Name %></p>
 
-            <p class="description">
-                Just displaying all the info. Will style later.
-            </p>
+                <p class="description">
+                    Just displaying all the info. Will style later.
+                </p>
 
-            <ul>
-                <li>Description: <%= auction.Description %></li>
-                <li>NumCopies: <%- auction.NumCopies %></li>
-                <li>Current Bid: $<%= auction.MinimumBid %></li>
-                <li>Minimum Increment: $<%= auction.BidIncrement %></li>
-                <li>Reserve Price: $<%= auction.ReservePrice %></li>
-            </ul>
+                <ul>
+                    <li>Description: <%= auction.Description %></li>
+                    <li>NumCopies: <%- auction.NumCopies %></li>
+                    <li>Current Bid: $<%= auction.MinimumBid %></li>
+                    <li>Minimum Increment: $<%= auction.BidIncrement %></li>
+                    <li>Reserve Price: $<%= auction.ReservePrice %></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+
+                <form id="bid-auction" class="form-horizontal">
+                    <label class="control-label">Bid Price: </label>
+                    <input class="form-control" name="price" type="text">
+
+                    <input type="hidden" name="item" value="<%= auction.ItemID %>">
+
+                    <input type="submit" class="btn btn-success" value="Bid Now">
+                </form>
+
+                <div style="display: none;" id="new-bid-alert" class="alert alert-success alert-dismissible" role="alert">
+                    You have bid on this auction! Good luck.
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h3>Bid History</h3>
+                <table class="table-hover table table-striped">
+                    <thead>
+                        <td>Customer</td>
+                        <td>Time</td>
+                        <td>Price</td>
+                    </thead>
+                    <% for (var i = 0; i < bids.length; i++) {%>
+
+                    <tr>
+                        <td><%= bids[i].CustomerID %></td>
+                        <td><%= bids[i].BidTime %></td>
+                        <td><%= bids[i].BidPrice %></td>
+                    </tr>
+
+                    <% } %>
+                </table>
+            </div>
+
         </div>
 
     </div>
 
 </div>
+
+<script type="text/javascript">
+    var auctionID = <%= auction.AuctionID %>;
+</script>
 <!-- /.container -->
 
 <% include partials/footer %>

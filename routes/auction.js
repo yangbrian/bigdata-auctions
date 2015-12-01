@@ -2,9 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../database.js').db;
+var auth = require('../database.js').auth;
 
 /* /auction home page */
-router.get('/', function (req, res, next) {
+router.get('/', auth, function (req, res, next) {
 
     res.send('This page does nothing right now. Please enter an ID');
 });
@@ -12,7 +13,7 @@ router.get('/', function (req, res, next) {
 /**
  * Get Auction by ID and display the listing page
  */
-router.get('/:id', function (req, res) {
+router.get('/:id', auth, function (req, res) {
     db.query(
         'SELECT * FROM auction ' +
         'INNER JOIN item ON auction.ItemID = item.ItemID ' +
@@ -26,11 +27,22 @@ router.get('/:id', function (req, res) {
                 return;
             }
 
-            res.render('auction', {
-                title: 'Viewing Auction ' + req.params.id,
-                auction: rows[0], // should only return one row
-                post: req.query.post ? true : false // show the new auction success alert
+            db.query('SELECT bid.CustomerID, bid.BidTime, bid.BidPrice ' +
+                'FROM bid ' +
+                'WHERE bid.AuctionID = ? ORDER BY bid.BidTime DESC', [req.params.id], function (err, bids) {
+
+                    res.render('auction', {
+                        title: 'Viewing Auction ' + req.params.id,
+                        user: req.user,
+                        auction: rows[0], // should only return one row
+                        bids: bids,
+                        post: req.query.post ? true : false // show the new auction success alert
+                    }
+
+                );
             });
+
+
         }
     );
 
@@ -44,15 +56,15 @@ router.get('/:id', function (req, res) {
  * Where hello is the value of the HTML 'name' attribute of each input field
  *
  */
-router.post('/new', function (req, res) {
+router.post('/new', auth, function (req, res) {
     // first add the item
     db.query('INSERT INTO item (Description, Name, Type, NumCopies)' +
         'VALUES (?, ?, ?, ?)', [req.body.description, req.body.name, req.body.type, req.body.copies],
         function (err, rows) {
 
-            // TEMPORARY HARDCODED EMPLOYEE AND CUSTOMER FOR NOW
+            // TEMPORARY HARDCODED EMPLOYEE
             req.body.monitor = 1;
-            req.body.customer = 222;
+            req.body.customer = req.user.CustomerID;
 
             // to group:
             // this callback function is executed when the query is complete,
@@ -102,6 +114,26 @@ router.post('/new', function (req, res) {
             }); // end get item ID query
         }
     ); // end insert item query
+});
+
+router.post('/bid/:id', auth, function (req, res) {
+
+    db.query('INSERT INTO bid VALUES (?, ?, ?, NOW(), ?)',
+        [req.user.SSN, req.params.id, req.body.item, req.body.price],
+        function (err, rows) {
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+        }
+    );
 });
 
 module.exports = router;
