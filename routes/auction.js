@@ -27,12 +27,22 @@ router.get('/:id', auth, function (req, res) {
                 return;
             }
 
-            res.render('auction', {
-                title: 'Viewing Auction ' + req.params.id,
-                user: req.user,
-                auction: rows[0], // should only return one row
-                post: req.query.post ? true : false // show the new auction success alert
+            db.query('SELECT bid.CustomerID, bid.BidTime, bid.BidPrice ' +
+                'FROM bid ' +
+                'WHERE bid.AuctionID = ? ORDER BY bid.BidTime DESC', [req.params.id], function (err, bids) {
+
+                    res.render('auction', {
+                        title: 'Viewing Auction ' + req.params.id,
+                        user: req.user,
+                        auction: rows[0], // should only return one row
+                        bids: bids,
+                        post: req.query.post ? true : false // show the new auction success alert
+                    }
+
+                );
             });
+
+
         }
     );
 
@@ -52,9 +62,9 @@ router.post('/new', auth, function (req, res) {
         'VALUES (?, ?, ?, ?)', [req.body.description, req.body.name, req.body.type, req.body.copies],
         function (err, rows) {
 
-            // TEMPORARY HARDCODED EMPLOYEE AND CUSTOMER FOR NOW
+            // TEMPORARY HARDCODED EMPLOYEE
             req.body.monitor = 1;
-            req.body.customer = 222;
+            req.body.customer = req.user.CustomerID;
 
             // to group:
             // this callback function is executed when the query is complete,
@@ -104,6 +114,26 @@ router.post('/new', auth, function (req, res) {
             }); // end get item ID query
         }
     ); // end insert item query
+});
+
+router.post('/bid/:id', auth, function (req, res) {
+
+    db.query('INSERT INTO bid VALUES (?, ?, ?, NOW(), ?)',
+        [req.user.SSN, req.params.id, req.body.item, req.body.price],
+        function (err, rows) {
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+        }
+    );
 });
 
 module.exports = router;
