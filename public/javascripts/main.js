@@ -35,6 +35,8 @@ $(document).ready(function() {
             }
         });
     })
+
+
 });
 
 function loadBestSellers(id) {

@@ -1,0 +1,44 @@
+<% include partials/header %>
+
+<div class="container">
+
+    <div class="col-md-12">
+
+
+        <table class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
+
+
+            <th><strong>Last Name</strong></th>
+            <th><strong>First Name</strong></th>
+            <th><strong>Address</strong></th>
+            <th><strong>ZipCode</strong></th>
+            <th><strong>Telephone</strong></th>
+            <th><strong>Email</strong></th>
+
+
+            <% for (var i = 0; i < customers.length; i++) { %>
+            <tr class='clickable-row '>
+                <td><%= customers[i].LastName %></td>
+                <td><%= customers[i].FirstName %></td>
+                <td><%= customers[i].Address %></td>
+                <td><%= customers[i].ZipCode %></td>
+                <td><%= customers[i].telephone %></td>
+                <td><%= customers[i].email %></td>
+            </tr>
+
+            <% } %>
+
+        </table>
+
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<% include partials/footer %>

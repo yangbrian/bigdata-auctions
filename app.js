@@ -61,7 +61,7 @@ app.use(passport.session());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
-app.use('/customer32', customers);
+app.use('/customer', customers);
 app.use('/items',items);
 
 
