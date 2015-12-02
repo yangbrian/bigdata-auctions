@@ -54,8 +54,6 @@ router.get('/newC', function(req, res, next) {
         'LEFT JOIN employee on EmployeeID = person.SSN ',
         function (err, rows) {
             if (err) throw err;
-            console.log("----")
-            console.log(rows);
             res.render('customer', {
                 title: 'Customer Info',
                 newCust: rows,
@@ -65,18 +63,18 @@ router.get('/newC', function(req, res, next) {
         });
 });
 
+
 //adding new customer
-router.get('/newC/adding', function(req, res, next) {
+router.get('/newC/adding/:SSN', function(req, res, next) {
 
     db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
         'VALUES (?,?,?) ',
+        [req.body.Rating, req.body.creditcardnum, req.params.SSN],
         function (err, rows) {
             if (err) throw err;
-            console.log("----")
-            console.log(rows);
-            res.render('customer', {
+            res.render('newCustomer', {
                 title: 'Customer Info',
-                newCust: rows,
+
                 check: 2
             });
 
@@ -86,8 +84,5 @@ router.get('/newC/adding', function(req, res, next) {
 router.get('/newC/adding/:SSN', function (req, res) {
     res.render('index');
 })
-
-
-
 
 module.exports = router;
