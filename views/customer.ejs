@@ -60,31 +60,6 @@
 
     </div>
 
-    <div class="row">
-
-        <div class="col-md-12">
-
-            <h3>Best Sellers</h3>
-            <table class="table-hover table table-striped">
-                <thead>
-                <td>FirstName</td>
-                <td>LastName</td>
-                <td>Name</td>
-                <td>Price</td>
-                </thead>
-                <% for (var i = 0; i < bestSeller.length; i++) {%>
-
-                <tr>
-                    <td><%= bestSeller[i].FirstName %></td>
-                    <td><%= bestSeller[i].LastName %></td>
-                    <td><%= bestSeller[i].Name %></td>
-                    <td><%= bestSeller[i].Price %></td>
-                </tr>
-
-                <% } %>
-            </table>
-        </div>
-    </div>
 </div>
 
 <% include partials/footer %>

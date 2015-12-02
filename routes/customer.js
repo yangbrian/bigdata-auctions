@@ -14,7 +14,8 @@ router.get('/', function (req, res, next) {
             if (err) throw err;
             res.render('customer', {
                 title: 'Customer Info',
-                customers: rows
+                customers: rows,
+                check : 1
             });
         }
     );
@@ -24,7 +25,7 @@ router.get('/', function (req, res, next) {
 //editing a customer
 router.get('/', function (req, res, next){
 
-    db.query('UPDATE customer',
+    db.query('UPDATE customer ',
         'SET Rating = ?, creditcardnum = ?, ',
         'WHERE customerID = ?' ,
         [req.body.Rating, req.body.creditcardnum, req.params.customerID],
@@ -38,7 +39,7 @@ router.get('/', function (req, res, next){
 //deleting a customer
 router.get('/', function(req, res, next){
 
-    db.query('DELETE FROM customer',
+    db.query('DELETE FROM customer ',
         'WHERE customerID = ' +req.params.customerID,
         function(err, rows){
             if(err)throw err;
@@ -54,13 +55,11 @@ router.get('/newC', function(req, res, next) {
         'LEFT JOIN customer on customerID = person.SSN ',
         function (err, rows) {
             if (err) throw err;
-            var SSN = req.body.SSN;
             res.render('customer', {
                 title: 'Customer Info',
                 newCust: rows,
                 check: 2
             });
-
 
         });
 });
@@ -81,5 +80,9 @@ router.post('/newC/adding/:SSN', function(req, res, next) {
 
         });
 });
+
+router.get('/newC/adding/:SSN', function (req, res) {
+    res.render('index');
+})
 
 module.exports = router;
