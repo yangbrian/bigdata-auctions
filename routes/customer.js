@@ -14,7 +14,8 @@ router.get('/', function (req, res, next) {
             if (err) throw err;
             res.render('customer', {
                 title: 'Customer Info',
-                customers: rows
+                customers: rows,
+                check : 1
             });
         }
     );
@@ -24,7 +25,7 @@ router.get('/', function (req, res, next) {
 //editing a customer
 router.get('/', function (req, res, next){
 
-    db.query('UPDATE customer',
+    db.query('UPDATE customer ',
         'SET Rating = ?, creditcardnum = ?, ',
         'WHERE customerID = ?' ,
         [req.body.Rating, req.body.creditcardnum, req.params.customerID],
@@ -38,7 +39,7 @@ router.get('/', function (req, res, next){
 //deleting a customer
 router.get('/', function(req, res, next){
 
-    db.query('DELETE FROM customer',
+    db.query('DELETE FROM customer ',
         'WHERE customerID = ' +req.params.customerID,
         function(err, rows){
             if(err)throw err;
@@ -49,23 +50,41 @@ router.get('/', function(req, res, next){
 //adding new customer
 router.get('/newC', function(req, res, next) {
 
-    db.query('INSERT INTO person (SSN, LastName, FirstName, Address, ZipCode, telephone, email) ' +
-        'VALUES(?, ?, ?, ?, ?, ?, ?)',
-        [req.body.SSN, req.body.LastName, req.body.FirstName, req.body.Address, req.body.ZipCode, req.body.telephone, req.body.email],
+    db.query('SELECT * FROM person ' +
+        'LEFT JOIN employee on EmployeeID = person.SSN ',
         function (err, rows) {
             if (err) throw err;
-            var SSN = req.body.SSN;
-
-            db.query('INSERT INTO customer (Rating, creditcardnum, CustomerID ' +
-                'VALUES(?,?,?)',
-                [req.body.Rating, req.body.creditcardnum, SSN],
-                function (err, rows) {
-                    if (err) throw err;
-
-                })
+            console.log("----")
+            console.log(rows);
+            res.render('customer', {
+                title: 'Customer Info',
+                newCust: rows,
+                check: 2
+            });
 
         });
 });
+
+//adding new customer
+router.get('/newC/adding', function(req, res, next) {
+
+    db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
+        'VALUES (?,?,?) ',
+        function (err, rows) {
+            if (err) throw err;
+            console.log("----")
+            console.log(rows);
+            res.render('customer', {
+                title: 'Customer Info',
+                newCust: rows,
+                check: 2
+            });
+
+        });
+});
+
+
+
 
 
 module.exports = router;
