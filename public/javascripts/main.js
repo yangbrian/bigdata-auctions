@@ -36,6 +36,15 @@ $(document).ready(function() {
         });
     })
 
+    $('#EditTable tr').click(function() {
+        return false;
+    }).dblclick(function() {
+        $(this).attr('data-id');
+        console.log($(this).attr('data-id'));
+        window.location = "http://localhost:4000/customer/newC/adding/" + $(this).attr('data-id');
+    });
+
+
 
 });
 
@@ -113,4 +122,5 @@ function loadUserAuctionItems(id) {
 
         table.next('.loader').fadeOut();
     });
+
 }

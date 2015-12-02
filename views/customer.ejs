@@ -29,7 +29,7 @@
 
 
         <%if(check == 2) {%>
-        <table class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
+        <table id = EditTable class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
 
             <th><strong>Last Name</strong></th>
             <th><strong>First Name</strong></th>
@@ -55,13 +55,11 @@
         </table>
         <% } %>
 
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+        <%if(check == 3) {%>
 
-                </div>
-            </div>
-        </div>
+
+        <% } %>
+
 
 
     </div>
