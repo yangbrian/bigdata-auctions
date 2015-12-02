@@ -4,7 +4,7 @@
 
     <div class="col-md-12">
 
-        <%if(check == 1) {%>
+        <% if(check == 1) { %>
         <table class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
 
             <th><strong>Last Name</strong></th>
@@ -27,9 +27,8 @@
         </table>
         <% } %>
 
-
-        <%if(check == 2) {%>
-        <table id = EditTable class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
+        <% if(check == 2) { %>
+        <table id=EditTable class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
 
             <th><strong>Last Name</strong></th>
             <th><strong>First Name</strong></th>
@@ -39,8 +38,8 @@
             <th><strong>Email</strong></th>
 
             <% for (var i = 0; i < newCust.length; i++) { %>
-            <%if(!newCust[i].Level) {%>
-            <tr data-id="<%= newCust[i].SSN%>" class='clickable-row '>
+            <% if(!newCust[i].Level && !newCust[i].creditcardnum) { %>
+            <tr data-id="<%= newCust[i].SSN %>" class='clickable-row '>
                 <td><%= newCust[i].LastName %></td>
                 <td><%= newCust[i].FirstName %></td>
                 <td><%= newCust[i].Address %></td>
@@ -55,12 +54,9 @@
         </table>
         <% } %>
 
-        <%if(check == 3) {%>
-
+        <% if(check == 3) { %>
 
         <% } %>
-
-
 
     </div>
 </div>

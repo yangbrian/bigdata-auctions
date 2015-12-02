@@ -51,7 +51,8 @@ router.get('/', function(req, res, next){
 router.get('/newC', function(req, res, next) {
 
     db.query('SELECT * FROM person ' +
-        'LEFT JOIN employee on EmployeeID = person.SSN ',
+        'LEFT JOIN employee on EmployeeID = person.SSN ' +
+        'LEFT JOIN customer on customerID = person.SSN ',
         function (err, rows) {
             if (err) throw err;
             res.render('customer', {
@@ -65,7 +66,7 @@ router.get('/newC', function(req, res, next) {
 
 
 //adding new customer
-router.get('/newC/adding/:SSN', function(req, res, next) {
+router.post('/newC/adding/:SSN', function(req, res, next) {
 
     db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
         'VALUES (?,?,?) ',
@@ -75,7 +76,6 @@ router.get('/newC/adding/:SSN', function(req, res, next) {
             res.render('newCustomer', {
                 title: 'Customer Info',
 
-                check: 2
             });
 
         });
