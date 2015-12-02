@@ -81,5 +81,8 @@ router.post('/newC/adding/:SSN', function(req, res, next) {
         });
 });
 
+router.get('/newC/adding/:SSN', function (req, res) {
+    res.render('index');
+})
 
 module.exports = router;

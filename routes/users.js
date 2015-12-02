@@ -103,4 +103,44 @@ router.get('/:id/auctions/items/', auth, function (req, res) {
     )
 });
 
+/**
+ * Get Items sold by user
+ */
+router.get('/:id/items/', auth, function (req, res) {
+    db.query('SELECT i.ItemID, i.Description, i.Name, i.Type, i.NumCopies, a.AuctionID, a.BidIncrement, a.MinimumBid, a.CopiesSold, a.Monitor ' +
+        'FROM sales s ' +
+        'INNER JOIN auction AS a ' +
+        '   ON s.AuctionID = a.AuctionID ' +
+        'INNER JOIN item AS i ' +
+        '   ON a.ItemID = i.ItemID ' +
+        'WHERE s.SellerID = ?', [req.params.id],
+        function (err, rows) {
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(rows));
+
+        }
+    )
+});
+
+/**
+ * Personalized item suggestion list for a user
+ */
+router.get('/:id/suggest/', auth, function (req, res) {
+   db.query('SELECT i.ItemID, i.Description, i.Name, i.Type ' +
+       'FROM item AS i ' +
+       'WHERE i.NumCopies > 0 AND i.Type IN ( ' +
+       '    SELECT i.Type ' +
+       '        FROM item AS i ' +
+       '        INNER JOIN sales AS s ' +
+       '            ON i.ItemID = s.ItemID ' +
+       '    WHERE s.BuyerID = ? ' +
+       ')', [req.params.id], function (err, rows) {
+
+           res.setHeader('content-type', 'application/json');
+           return res.send(JSON.stringify(rows));
+       }
+   );
+});
+
 module.exports = router;

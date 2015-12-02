@@ -49,3 +49,7 @@ tr {
 .tablehover tr{
     background: #b8d1f3;
 }
+
+.auction-row:hover {
+    cursor: pointer;
+}
