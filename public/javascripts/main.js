@@ -34,6 +34,10 @@ $(document).ready(function() {
                 console.log("FAIL");
             }
         });
+    });
+
+    $('#user-auctions').on('click', '.auction-row', function () {
+        window.location = '/auction/' + $(this).attr('data-id');
     })
 
 
@@ -82,6 +86,8 @@ function loadUserAuctions(id) {
                     .append($('<td>').html(auction.Name))
                     .append($('<td>').html(auction.Description))
                     .append($('<td>').html(auction.Type))
+                    .attr('data-id', auction.AuctionID)
+                    .addClass('auction-row')
             );
         });
 
@@ -113,4 +119,59 @@ function loadUserAuctionItems(id) {
 
         table.next('.loader').fadeOut();
     });
+}
+
+function loadUserItems(id) {
+    $.ajax({
+        url: '/users/' + id + '/items/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#user-items');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumCopies))
+                    .append($('<td>').html(item.AuctionID))
+                    .append($('<td>').html(item.BidIncrement))
+                    .append($('<td>').html(item.MinimumBid))
+                    .append($('<td>').html(item.Monitor))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadItemSuggestions(id) {
+    $.ajax({
+        url: '/users/' + id + '/suggest/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#user-suggestions');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadUserTables(id) {
+    loadBestSellers(id);
+    loadUserAuctions(id);
+    loadUserAuctionItems(id);
+    loadUserItems(id);
+    loadItemSuggestions(id);
 }
