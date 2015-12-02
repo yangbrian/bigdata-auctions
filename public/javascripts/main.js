@@ -38,3 +38,79 @@ $(document).ready(function() {
 
 
 });
+
+function loadBestSellers(id) {
+    $.ajax({
+        url: '/users/' + id + '/best/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#best-sellers');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumberSold))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadUserAuctions(id) {
+    $.ajax({
+        url: '/users/' + id + '/auctions/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#user-auctions');
+        $.each(data, function (index, auction) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(auction.AuctionID))
+                    .append($('<td>').html(auction.BidIncrement))
+                    .append($('<td>').html(auction.MinimumBid))
+                    .append($('<td>').html(auction.CopiesSold))
+                    .append($('<td>').html(auction.Monitor))
+                    .append($('<td>').html(auction.ItemID))
+                    .append($('<td>').html(auction.BuyerID))
+                    .append($('<td>').html(auction.SellerID))
+                    .append($('<td>').html(auction.Name))
+                    .append($('<td>').html(auction.Description))
+                    .append($('<td>').html(auction.Type))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadUserAuctionItems(id) {
+    $.ajax({
+        url: '/users/' + id + '/auctions/items/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#user-auction-items');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumCopies))
+                    .append($('<td>').html(item.AuctionID))
+                    .append($('<td>').html(item.BidIncrement))
+                    .append($('<td>').html(item.MinimumBid))
+                    .append($('<td>').html(item.Monitor))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
