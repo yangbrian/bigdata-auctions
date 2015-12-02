@@ -13,7 +13,8 @@ router.get('/', auth, function (req, res) {
 
     res.render('search', {
         title: 'Search Results',
-        search: req.query.search
+        search: req.query.search,
+        user: req.user
     });
 
 });
