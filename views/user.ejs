@@ -19,33 +19,72 @@
                 <li><strong>Credit Card: </strong>**** **** **** <%= person.creditcardnum.toString().slice(-4) %></li>
             </ul>
 
+            <h3>Auctions</h3>
+            <p>A history of all current and past auctions a customer has taken part in</p>
+            <table id="user-auctions" class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Bid Increment</th>
+                    <th>Minimum Bid</th>
+                    <th>Copies</th>
+                    <th>Employee</th>
+                    <th>ItemID</th>
+                    <th>BuyerID</th>
+                    <th>SellerID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <td>Type</td>
+                </tr>
+            </table>
+            <div class="loader">
+                <p>Loading auctions...</p>
+            </div>
+
+            <h3>All Items Being Auctioned or Sold</h3>
+            <p>All items that the user has auctioned in the past.</p>
+            <table id="user-auction-items" class="table table-hover">
+                <tr>
+                    <th>ItemID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Copies</th>
+                    <th>AuctionID</th>
+                    <th>Increment</th>
+                    <th>MinimumBid</th>
+                    <th>Employee</th>
+                </tr>
+            </table>
+            <div class="loader">
+                <p>Loading items...</p>
+            </div>
+
+
 
             <h3>Best Sellers</h3>
-            <table class="table table-hover">
+            <table id="best-sellers" class="table table-hover">
                 <tr>
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Type</td>
-                    <td>Number Sold</td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Number Sold</th>
                 </tr>
-                <% for (var i = 0; i < rows.length; i++) { %>
-
-                <td><%= rows[i].ItemID %></td>
-                <td><%= rows[i].Name %></td>
-                <td><%= rows[i].Description %></td>
-                <td><%= rows[i].Type %></td>
-                <td><%= rows[i].NumberSold %></td>
-
-
-                <% } %>
             </table>
-
+            <div class="loader">
+                <p>Loading best sellers list...</p>
+            </div>
         </div>
 
     </div>
 
 </div>
 <!-- /.container -->
+
+<script type='text/javascript'>
+    loadBestSellers(<%= person.SSN %>);
+    loadUserAuctions(<%= person.SSN %>);
+    loadUserAuctionItems(<%= person.SSN %>);
+</script>
 
 <% include partials/footer %>
