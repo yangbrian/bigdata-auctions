@@ -9,7 +9,6 @@
 
         <div class="col-md-12">
 
-            <div class="col-md-6">
                 <h3>List of items</h3>
                 <table class="table-hover table table-striped">
                     <thead>
@@ -31,7 +30,55 @@
 
                     <% } %>
                 </table>
-            </div>
         </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <h3>Best Sellers</h3>
+                <table class="table-hover table table-striped">
+                    <thead>
+                    <td>FirstName</td>
+                    <td>LastName</td>
+                    <td>ItemName</td>
+                    <td>Price</td>
+                    </thead>
+                    <% for (var i = 0; i < bestSeller.length; i++) {%>
+
+                    <tr>
+                        <td><%= bestSeller[i].FirstName %></td>
+                        <td><%= bestSeller[i].LastName %></td>
+                        <td><%= bestSeller[i].ItemName %></td>
+                        <td><%= bestSeller[i].Price %></td>
+                    </tr>
+
+                    <% } %>
+                </table>
+            </div>
+
+            <div class="col-md-12">
+
+                <h3>Revenue listed by item</h3>
+                <table class="table-hover table table-striped">
+                    <thead>
+                    <td>ItemID</td>
+                    <td>Type</td>
+                    <td>Name</td>
+                    <td>Revenue</td>
+                    </thead>
+                    <% for (var i = 0; i < bestSeller.length; i++) {%>
+
+                    <tr>
+                        <td><%= bestSeller[i].FirstName %></td>
+                        <td><%= bestSeller[i].LastName %></td>
+                        <td><%= bestSeller[i].ItemName %></td>
+                        <td><%= bestSeller[i].Price %></td>
+                    </tr>
+
+                    <% } %>
+                </table>
+            </div>
     </div>
+</div>
 </div>
