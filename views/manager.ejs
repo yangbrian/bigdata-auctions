@@ -1,0 +1,36 @@
+<!-- Auction Page -->
+
+<% include partials/header %>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Manager Dashboard</h2>
+
+            <h3>Best Sellers</h3>
+            <p>Best-seller list of items</p>
+            <table id="best-sellers" class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<script type="text/javascript">
+    loadManagerTables();
+</script>
+
+<% include partials/footer %>

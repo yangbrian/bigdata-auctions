@@ -26,6 +26,7 @@ var customers = require('./routes/customer');
 var db = require('./database.js').db;
 var items = require('./routes/items');
 var search = require('./routes/search');
+var manager = require('./routes/manager');
 
 
 var app = express();
@@ -65,6 +66,7 @@ app.use('/auction', auction);
 app.use('/customer', customers);
 app.use('/items',items);
 app.use('/search', search);
+app.use('/manager', manager);
 
 
 
@@ -112,7 +114,8 @@ passport.use(new LocalStrategy(
 
 
         console.log("TRY");
-        db.query('SELECT * FROM person WHERE email=?', [username], function (err, rows) {
+        db.query('SELECT * FROM person ' +
+            'WHERE email=?', [username], function (err, rows) {
             if (err)
                 return done(err);
 

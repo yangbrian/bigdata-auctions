@@ -21,30 +21,64 @@ $(document).ready(function() {
         });
     });
 
+    $('#bid-sold').on('click', function () {
+
+        var buyer = $(this).data('buyer');
+        var price = $(this).data('price');
+
+        $.post('/auction/sell/', {
+            buyer: buyer,
+            seller: $(this).data('seller'),
+            price: price,
+            item: $(this).data('item'),
+            auction: auctionID
+        }, function (data) {
+            if (data.success) {
+                $.notify({
+                    message: 'Item SOLD to buyer ' + buyer + ' for $' + price + '!'
+                },{
+                    type: 'success',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
+
+            } else {
+                $.notify({
+                    message: 'Error selling item. Is it already sold?'
+                },{
+                    type: 'danger',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
+            }
+        });
+    });
+
     $('#bid-auction').on('submit', function (e) {
         e.preventDefault();
 
         $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {
             if (data.success) {
-                $('#new-bid-alert').fadeIn();
-                setTimeout(function() {
-                    location.reload();
-                }, 500);
-            } else {
-                console.log("FAIL");
-            }
-        });
-    });
+                $.notify({
+                    message: 'You have successfully placed a bid! Good luck!'
+                },{
+                    type: 'success',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
 
-    $('#bid-sold').on('submit', function (e) {
-        e.preventDefault();
-
-        $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {
-            if (data.success) {
-                $('#new-bid-alert').fadeIn();
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
-                }, 500);
+                }, 800);
             } else {
                 console.log("FAIL");
             }
@@ -198,27 +232,6 @@ function loadUserItems(id) {
     });
 }
 
-function loadItemSuggestions(id) {
-    $.ajax({
-        url: '/users/' + id + '/suggest/',
-        context: document.body
-    }).done(function (data) {
-        var table = $('#user-suggestions');
-        $.each(data, function (index, item) {
-
-            table.append(
-                $('<tr>')
-                    .append($('<td>').html(item.ItemID))
-                    .append($('<td>').html(item.Name))
-                    .append($('<td>').html(item.Description))
-                    .append($('<td>').html(item.Type))
-            );
-        });
-
-        table.next('.loader').fadeOut();
-    });
-}
-
 function loadUserTables(id) {
     loadBestSellers(id);
     loadUserAuctions(id);
@@ -283,4 +296,30 @@ function searchByType(type) {
 function loadSearchTables(keyword) {
     searchByName(keyword);
     searchByType(keyword);
+}
+
+function managerBest() {
+    $.ajax({
+        url: '/manager/best/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#best-sellers');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumberSold))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadManagerTables() {
+    managerBest();
 }

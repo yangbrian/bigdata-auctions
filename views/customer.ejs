@@ -17,6 +17,8 @@
             <% for (var i = 0; i < customers.length; i++) { %>
             <tr data-id="<%=customers[i].SSN%>" class='clickable-row '>
                 <td><button data-id= "<%customers[i].SSN %>" onClick = "deleteRow(this.parentNode.parentNode.rowIndex, <%=customers[i].SSN%>);" class="close"  method = "post"> </button> </td>
+            <tr class='clickable-row '>
+                <td><button data-id= "<%customers[i].customerID %>" action = "/customer"class="delete"  method = "post"> </button> </td>
                 <td><%= customers[i].LastName %></td>
                 <td><%= customers[i].FirstName %></td>
                 <td><%= customers[i].Address %></td>

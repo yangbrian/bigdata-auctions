@@ -33,7 +33,7 @@
                     <th>SellerID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <td>Type</td>
+                    <th>Type</th>
                 </tr>
             </table>
             <div class="loader">
@@ -60,7 +60,7 @@
             </div>
 
             <h3>All Items Being Auctioned or Sold</h3>
-            <p>All items that the user has auctioned in the past. Note: Sold table does NOT check if the SellerID is actually the ID of the customer who posted the auction, and this is test data so its fake. When the SOLD button works later, this table will make more sense. For now, this and the one above don't overlap at all. </p>
+            <p>All items that the user has auctioned in the past or currently being aucionted. </p>
             <table id="user-auction-items" class="table table-hover">
                 <tr>
                     <th>ItemID</th>
@@ -92,20 +92,6 @@
             </table>
             <div class="loader">
                 <p>Loading best sellers list...</p>
-            </div>
-
-            <h3>Suggested Auctions</h3>
-            <p>Personalized item suggestion list. This will be on a separate page later and visible only to your own logged in account. For now, its here to display for any user. ** this will be changed to showing auctions instead later **</p>
-            <table id="user-suggestions" class="table table-hover">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                </tr>
-            </table>
-            <div class="loader">
-                <p>Loading item suggestions...</p>
             </div>
         </div>
 

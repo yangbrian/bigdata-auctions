@@ -1,0 +1,39 @@
+<!-- Auction Page -->
+
+<% include partials/header %>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h2>Personalized Item Suggestion List</h2>
+
+            <table id="user-suggestions" class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                </tr>
+                <% for (var i = 0; i < items.length; i++) { %>
+
+                <tr>
+                    <td><%= items[i].ItemID %></td>
+                    <td><%= items[i].Name %></td>
+                    <td><%= items[i].Description %></td>
+                    <td><%= items[i].Type %></td>
+                </tr>
+
+                <% } %>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<% include partials/footer %>
