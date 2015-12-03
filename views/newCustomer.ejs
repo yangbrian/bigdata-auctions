@@ -1,11 +1,14 @@
 <div>
 
-    <form action = "customer_info">
+    <form action = "/customer/newC/adding/<%= SSN %>" method = "post">
         Credit Card Number: <br>
-        <input type="text" number="creditcardnum">
+        <input type="text" name="creditcardnum">
         <br>
         Rating: <br>
-        <input type="text" number="Rating">
+        <input type="text" name="Rating">
+
+        <br>
+        <input type="submit">
 
     </form>
 
