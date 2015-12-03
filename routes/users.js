@@ -14,7 +14,7 @@ router.get('/', auth, function (req, res, next) {
  *
  * Table informatino is loaded via AJAX calls (see other functions)
  */
-router.get('/:id/', auth, function (req, res) {
+router.get('/:id(\\d+)/', auth, function (req, res) {
 
     db.query('SELECT * FROM person ' +
         'LEFT JOIN customer ON person.SSN = customer.CustomerID ' +
@@ -124,23 +124,33 @@ router.get('/:id/items/', auth, function (req, res) {
 });
 
 /**
- * Personalized item suggestion list for a user
+ * Personalized item suggestion list for the current user
  */
-router.get('/:id/suggest/', auth, function (req, res) {
-   db.query('SELECT i.ItemID, i.Description, i.Name, i.Type ' +
-       'FROM item AS i ' +
-       'WHERE i.NumCopies > 0 AND i.Type IN ( ' +
-       '    SELECT i.Type ' +
-       '        FROM item AS i ' +
-       '        INNER JOIN sales AS s ' +
-       '            ON i.ItemID = s.ItemID ' +
-       '    WHERE s.BuyerID = ? ' +
-       ')', [req.params.id], function (err, rows) {
+router.get('/suggest/', auth, function (req, res) {
+    console.log("Test");
+    db.query('SELECT i.ItemID, i.Description, i.Name, i.Type ' +
+        'FROM item AS i ' +
+        'WHERE i.NumCopies > 0 AND i.Type IN ( ' +
+        '    SELECT i.Type ' +
+        '        FROM item AS i ' +
+        '        INNER JOIN sales AS s ' +
+        '            ON i.ItemID = s.ItemID ' +
+        '    WHERE s.BuyerID = ? ' +
+        ') AND i.ItemID NOT IN ( ' +
+        '     SELECT i.ItemID ' +
+        '          FROM item AS i ' +
+        '          INNER JOIN sales AS s ' +
+        '               ON i.ItemID = s.ItemID ' +
+        '     WHERE s.BuyerID = 222 ' +
+        ')', [req.user.SSN], function (err, rows) {
 
-           res.setHeader('content-type', 'application/json');
-           return res.send(JSON.stringify(rows));
-       }
-   );
+            res.render('suggest', {
+                title: 'Personalized Item Suggestion List',
+                user: req.user,
+                items: rows
+            })
+        }
+    );
 });
 
 

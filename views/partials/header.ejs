@@ -55,9 +55,14 @@
                 <li>
                     <a href="#">Top Lists</a>
                 </li>
+                <% if (locals.user) { %>
                 <li>
-                    <a href="#">My Auctions</a>
+                    <a href="/users/suggest/">Suggested</a>
                 </li>
+                <li>
+                    <a href="/users/<%= user.SSN %>">My Auctions</a>
+                </li>
+                <% } %>
                 <li>
                     <a href="#" data-toggle="modal" data-target="#new-auction"><strong>New Auction</strong></a>
                 </li>

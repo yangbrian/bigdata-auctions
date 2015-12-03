@@ -157,33 +157,11 @@ function loadUserItems(id) {
     });
 }
 
-function loadItemSuggestions(id) {
-    $.ajax({
-        url: '/users/' + id + '/suggest/',
-        context: document.body
-    }).done(function (data) {
-        var table = $('#user-suggestions');
-        $.each(data, function (index, item) {
-
-            table.append(
-                $('<tr>')
-                    .append($('<td>').html(item.ItemID))
-                    .append($('<td>').html(item.Name))
-                    .append($('<td>').html(item.Description))
-                    .append($('<td>').html(item.Type))
-            );
-        });
-
-        table.next('.loader').fadeOut();
-    });
-}
-
 function loadUserTables(id) {
     loadBestSellers(id);
     loadUserAuctions(id);
     loadUserAuctionItems(id);
     loadUserItems(id);
-    loadItemSuggestions(id);
 }
 
 function searchByName(name) {
