@@ -15,6 +15,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type='text/css'>
+
     <!-- Custom CSS -->
     <link href="/stylesheets/theme.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet">
@@ -67,12 +70,32 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <% if (locals.user) { %>
-                        <li>
-                            <a href="/users/<%= user.SSN %>">My Profile</a>
-                        </li>
-                        <li>
-                            <a href="/users/suggest/">Suggested</a>
-                        </li>
+                            <li>
+                                <a href="/users/<%= user.SSN %>">My Profile</a>
+                            </li>
+                            <li>
+                                <a href="/users/suggest/">Suggested</a>
+                            </li>
+
+                            <!-- Employee -->
+                            <%if (user.Level) { %>
+                                <li role="separator" class="divider"></li>
+
+                                <!-- Managers -->
+                                <%if (user.Level === 1) { %>
+
+                                    <li>
+                                        <a href="/manager/">Manager Dashboard</a>
+                                    </li>
+
+                                    <li role="separator" class="divider"></li>
+
+                                <% } %>
+
+                                <li>
+                                    <a href="/customer/">Customers</a>
+                                </li>
+                            <% } %>
                         <% } %>
                     </ul>
                 </li>

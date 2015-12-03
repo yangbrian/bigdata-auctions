@@ -24,7 +24,7 @@ var users = require('./routes/users');
 var auction = require('./routes/auction');
 var customers = require('./routes/customer');
 var db = require('./database.js').db;
-var items = require('./routes/items');
+var sales = require('./routes/sales');
 var search = require('./routes/search');
 var manager = require('./routes/manager');
 
@@ -64,7 +64,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/auction', auction);
 app.use('/customer', customers);
-app.use('/items',items);
+app.use('/manager/sales', sales);
 app.use('/search', search);
 app.use('/manager', manager);
 
@@ -115,7 +115,9 @@ passport.use(new LocalStrategy(
 
         console.log("TRY");
         db.query('SELECT * FROM person ' +
-            'WHERE email=?', [username], function (err, rows) {
+            'LEFT JOIN customer ON person.SSN = customer.CustomerID ' +
+            'LEFT JOIN employee ON person.SSN = employee.EmployeeID ' +
+            'WHERE person.email=?', [username], function (err, rows) {
             if (err)
                 return done(err);
 
