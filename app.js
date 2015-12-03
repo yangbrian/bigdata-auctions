@@ -125,7 +125,7 @@ passport.use(new LocalStrategy(
                 console.log("USER");
                 return done(null, false, { message: 'Incorrect username.' });
             }
-            if (password != "hello") {
+            if ((rows[0].password == '' && password != 'hello') || password != rows[0].password) {
                 console.log("PASS");
                 return done(null, false, { message: 'Incorrect password.' });
             }

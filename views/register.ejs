@@ -1,0 +1,62 @@
+<% include partials/header %>
+
+
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <% if (locals.message && message != '') { %>
+            <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+
+            <p>An account is required to use the site. Your account will be upgraded by a customer representative to allow you to sell and bid auctions.</p>
+
+            <form action="/register/" method="post">
+                <div class="form-group">
+                    <label class="control-label">SSN or ID Number:</label>
+                    <input class="form-control" type="text" name="SSN"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">First Name:</label>
+                    <input class="form-control" type="text" name="FirstName"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Last Name:</label>
+                    <input class="form-control" type="text" name="LastName"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Address:</label>
+                    <input class="form-control" type="text" name="Address"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Zip Code:</label>
+                    <input class="form-control" type="text" name="ZipCode"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Telephone:</label>
+                    <input class="form-control" type="text" name="telephone"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Email:</label>
+                    <input class="form-control" type="text" name="email"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Password:</label>
+                    <input class="form-control" type="password" name="password"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-primary" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<% include partials/footer %>
