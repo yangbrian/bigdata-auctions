@@ -192,3 +192,7 @@ tr {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
 }
+
+#month-select select, #month-select input {
+    width: 50%;
+}

@@ -1,0 +1,45 @@
+<!-- Auction Page -->
+
+<% include partials/header %>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+        <p><a href="/manager/">&lt;&lt; Back to Manager Dashboard</a></p>
+
+        <h2>Sales Report for <%= monthyear %></h2>
+
+            <table id="monthly-sales-table" class="table table-hover">
+                <tr>
+                    <th>Seller ID</th>
+                    <th>Buyer ID</th>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Sales Price</th>
+                    <th>Sales Date</th>
+                </tr>
+
+                <% for (var i = 0; i < sales.length; i++) {%>
+
+                <tr>
+                    <td><%= sales[i].SellerID %></td>
+                    <td><%= sales[i].BuyerID %></td>
+                    <td><%= sales[i].ItemID %></td>
+                    <td><%= sales[i].Name %></td>
+                    <td><%= sales[i].Price %></td>
+                    <td><%= sales[i].Date %></td>
+                </tr>
+
+                <% } %>
+
+            </table>
+    </div>
+</div>
+
+
+<% include partials/footer %>
+
