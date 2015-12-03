@@ -48,6 +48,11 @@ router.post('/login',
         failureFlash: true })
 );
 
+router.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
+
 router.get('/register', function (req, res) {
     res.render('register', {
         title: 'Register'
@@ -55,6 +60,12 @@ router.get('/register', function (req, res) {
 });
 
 router.post('/register', function (req, res) {
+    if (req.body.SSN == '' || req.body.Email == '') {
+        return res.render('register', {
+            title: 'Register',
+            message: 'Error - ID/SSN and Email are both required.'
+        });
+    }
     db.query('INSERT INTO person ' +
         'VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         [req.body.SSN, req.body.LastName, req.body.FirstName, req.body.Address, req.body.ZipCode, req.body.telephone, req.body.email, req.body.password],

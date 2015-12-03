@@ -3,5 +3,6 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{bigdata node_modules}" />
     <file url="PROJECT" libraries="{jquery}" />
+    <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
