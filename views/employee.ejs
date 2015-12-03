@@ -11,15 +11,16 @@
 
             <h2>Manager Dashboard</h2>
 
-            <h3>Best Sellers</h3>
+            <h3>Employee Listing</h3>
 
-            <p>Best-seller list of items</p>
-            <table id="best-sellers" class="table table-hover">
+            <table id="employee-list" class="table table-hover" method = "post">
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Type</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Start Date</th>
+                    <th>Hourly Rate</th>
+                    <th>Level</th>
                 </tr>
 
             </table>
@@ -32,7 +33,7 @@
 <!-- /.container -->
 
 <script type="text/javascript">
-    loadManagerTables();
+    loadEmployeeTables();
 </script>
 
 <% include partials/footer %>

@@ -150,6 +150,7 @@ function loadBestSellers(id) {
 }
 
 function loadUserAuctions(id) {
+
     $.ajax({
         url: '/users/' + id + '/auctions/',
         context: document.body
@@ -318,6 +319,30 @@ function managerBest() {
 
         table.next('.loader').fadeOut();
     });
+}
+
+function  loadEmployeeTables(){
+    $.ajax({
+        url: '/manager/employee/get',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#employee-list');
+        $.each(data, function (index, employee) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(employee.EmployeeID))
+                    .append($('<td>').html(employee.FirstName))
+                    .append($('<td>').html(employee.LastName))
+                    .append($('<td>').html(employee.StartDate))
+                    .append($('<td>').html(employee.HourlyRate))
+                    .append($('<td>').html(employee.Level))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
 }
 
 function loadManagerTables() {
