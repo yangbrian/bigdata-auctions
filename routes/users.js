@@ -43,13 +43,12 @@ router.get('/:id(\\d+)/', auth, function (req, res) {
  */
 router.get('/:id/best/', auth, function (req, res) {
 
-    db.query('SELECT i.ItemID, i.Description, i.Name, i.Type, ' +
-        'COUNT(s.itemID) AS NumberSold ' +
+    db.query('SELECT i.ItemID, i.Description, i.Name, i.Type, COUNT(i.Name) AS NumberSold ' +
         'FROM item AS i ' +
         'INNER JOIN sales AS s ' +
-        'ON i.ItemID = s.ItemID ' +
-        'WHERE s.SellerID = ? ' +
-        '   GROUP BY s.ItemID ' +
+        '   ON i.ItemID = s.ItemID ' +
+        'WHERE s.SellerID = 222 ' +
+        'GROUP BY i.Name ' +
         'ORDER BY NumberSold DESC', [req.params.id],
         function (err, rows) {
 
