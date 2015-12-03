@@ -108,36 +108,110 @@ $(document).ready(function() {
     });
 
 
+    //adding employee
     $('#employee-list').on('click', '.plus', function(){
         $('#add-employee').modal('show');
-    });
-
-    $('#employee-list').on('click', '.minus', function(){
         var row = $(this).parent().parent();
-        alert("delete");
         $.post('/manager/employee/' + $(this).attr('data-id'), $(this).serialize(), function (data) {
             if (data.success) {
                 console.log("SUCCESS");
                 row.remove();
-                //window.location = '/manager/employee/' + $(this).attr('data-id');
+
+            } else {
+                console.log("FAIL");
+            }
+        });
+
+    });
+
+    //deleting employee
+    $('#employee-list').on('click', '.minus', function(){
+        var row = $(this).parent().parent();
+        $.post('/manager/employee/' + row.attr('data-id'), $(this).serialize(), function (data) {
+            if (data.success) {
+                console.log("SUCCESS");
+                row.remove();
+
             } else {
                 console.log("FAIL");
             }
         });
     });
 
-    $('table').on('click', '.edit', function(){
-        alert("edit");
+    //adding customer
+    $('#customer-list').on('click', '.plus', function(){
+        $('#add-customer').modal('show');
+        var row = $(this).parent().parent();
+        $.post('/customer/' + $(this).attr('data-id'), $(this).serialize(), function (data) {
+            if (data.success) {
+                console.log("SUCCESS");
+            } else {
+                console.log("FAIL");
+            }
+        });
+
+    });
+
+    //edit customer
+    $('#customer-list').on('click', '.edit', function(){
+        $('#edit-customer').modal('show');
+    });
+
+    //delete customer
+    $('#customer-list').on('click', '.minus', function(){
+        var row = $(this).parent().parent();
+       // alert("delete");
+        $.post('/customer/' + row.attr('data-id'), $(this).serialize(), function (data) {
+            if (data.success) {
+                console.log("SUCCESS");
+                row.remove();
+            } else {
+                console.log("FAIL");
+            }
+        });
     });
 
 });
 
 function loadCustomerTables(){
+
     $.ajax({
-        url: '/manager/employee/get',
+        url: '/customer/get',
         context: document.body
     }).done(function (data) {
-        var table = $('#employee-list');
+        var table = $('#customer-list');
+
+        $.each(data, function (index, customer) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(customer.SSN))
+                    .append($('<td>').html(customer.FirstName))
+                    .append($('<td>').html(customer.LastName))
+                    .append($('<td>').html(customer.Address))
+                    .append($('<td>').html(customer.ZipCode))
+                    .append($('<td>').html(customer.telephone))
+                    .append($('<td>').html(customer.email))
+                    .append($('<td>').html("<span class = 'minus'> <i class='fa fa-minus'></i></span>"))
+                    .append($('<td>').html("<span class = 'edit'> <i class='fa fa-pencil'></i></span>"))
+                    .attr('data-id', customer.SSN)
+                    .addClass("customer-row")
+
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+}
+
+function loadNewEmployeeTable(){
+
+    $.ajax({
+        url: '/manager/employee/new',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#newEmployee-list');
         $.each(data, function (index, employee) {
 
             table.append(
@@ -148,17 +222,13 @@ function loadCustomerTables(){
                     .append($('<td>').html(employee.StartDate))
                     .append($('<td>').html(employee.HourlyRate))
                     .append($('<td>').html(employee.Level))
-                    .append($('<td>').html("<span class = 'plus'> <i class='fa fa-plus'></i></span> "))
-                    .append($('<td>').html("<span class = 'minus'> <i class='fa fa-minus'></i></span>"))
-                    .append($('<td>').html("<span class = 'edit'> <i class='fa fa-pencil'></i></span>"))
-                    .attr('data-id', employee.EmployeeID)
-                    .addClass("employee-row")
 
             );
         });
 
         table.next('.loader').fadeOut();
     });
+
 }
 
 
@@ -178,7 +248,6 @@ function  loadEmployeeTables(){
                     .append($('<td>').html(employee.StartDate))
                     .append($('<td>').html(employee.HourlyRate))
                     .append($('<td>').html(employee.Level))
-                    .append($('<td>').html("<span class = 'plus'> <i class='fa fa-plus'></i></span> "))
                     .append($('<td>').html("<span class = 'minus'> <i class='fa fa-minus'></i></span>"))
                     .append($('<td>').html("<span class = 'edit'> <i class='fa fa-pencil'></i></span>"))
                     .attr('data-id', employee.EmployeeID)
@@ -189,23 +258,6 @@ function  loadEmployeeTables(){
 
         table.next('.loader').fadeOut();
     });
-
-}
-
-function deleteRow(i, id){
-
-    $.post('/customer/' + id, $(this).serialize(), function (data) {
-        if (data.success) {
-            document.getElementById('EditCustomerTable').deleteRow(i);
-        } else {
-            console.log("FAIL");
-        }
-    });
-
-
-}
-
-function loadCustomers(id){
 
 }
 

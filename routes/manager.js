@@ -209,7 +209,7 @@ router.get('/employee/new/:EmployeeID', function (req, res, next) {
 
 });
 
-//adding new customer
+//adding new employee
 router.post('/newC/adding/:SSN', function (req, res, next) {
 
     db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
