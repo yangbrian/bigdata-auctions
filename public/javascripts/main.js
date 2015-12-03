@@ -320,6 +320,47 @@ function managerBest() {
     });
 }
 
+function managerRevenue() {
+    $.ajax({
+        url: '/manager/revenue/best/reps',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#best-customer-reps');
+        $.each(data, function (index, person) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(person.SSN))
+                    .append($('<td>').html(person.FirstName))
+                    .append($('<td>').html(person.LastName))
+                    .append($('<td>').html('$' + person.TotalRevenue))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+    $.ajax({
+        url: '/manager/revenue/best/customers',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#best-customers');
+        $.each(data, function (index, person) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(person.SSN))
+                    .append($('<td>').html(person.FirstName))
+                    .append($('<td>').html(person.LastName))
+                    .append($('<td>').html('$' + person.TotalRevenue))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
 function loadManagerTables() {
     managerBest();
+    managerRevenue();
 }

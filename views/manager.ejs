@@ -11,6 +11,18 @@
 
             <h2>Manager Dashboard</h2>
 
+            <h3>Get Sales</h3>
+
+            <p>Get a list of sales by item name or customer name.</p>
+            <form action="/manager/sales/" method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter an item name or customer name" name="search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+
             <h3>Best Sellers</h3>
             <p>Best-seller list of items</p>
             <table id="best-sellers" class="table table-hover">
@@ -19,9 +31,45 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Type</th>
+                    <th>Number Sold</th>
                 </tr>
 
             </table>
+            <div class="loader">
+                <p>Loading items...</p>
+            </div>
+
+            <h3>Highest Revenue Generating Customer Representatives</h3>
+
+            <p>Customer representatives that generated most total revenue</p>
+            <table id="best-customer-reps" class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Total Revenue</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading customer reps...</p>
+            </div>
+
+            <h3>Highest Revenue Generating Customers</h3>
+
+            <p>Customers that generated most total revenue</p>
+            <table id="best-customers" class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Total Revenue</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading customers...</p>
+            </div>
         </div>
 
     </div>

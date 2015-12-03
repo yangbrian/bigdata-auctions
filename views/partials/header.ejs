@@ -67,12 +67,32 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <% if (locals.user) { %>
-                        <li>
-                            <a href="/users/<%= user.SSN %>">My Profile</a>
-                        </li>
-                        <li>
-                            <a href="/users/suggest/">Suggested</a>
-                        </li>
+                            <li>
+                                <a href="/users/<%= user.SSN %>">My Profile</a>
+                            </li>
+                            <li>
+                                <a href="/users/suggest/">Suggested</a>
+                            </li>
+
+                            <!-- Employee -->
+                            <%if (user.Level) { %>
+                                <li role="separator" class="divider"></li>
+
+                                <!-- Managers -->
+                                <%if (user.Level === 1) { %>
+
+                                    <li>
+                                        <a href="/manager/">Manager Dashboard</a>
+                                    </li>
+
+                                    <li role="separator" class="divider"></li>
+
+                                <% } %>
+
+                                <li>
+                                    <a href="/customer/">Customers</a>
+                                </li>
+                            <% } %>
                         <% } %>
                     </ul>
                 </li>
