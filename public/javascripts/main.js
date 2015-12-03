@@ -108,15 +108,15 @@ $(document).ready(function() {
     });
 
 
-    $('table').on('click', '.plus', function(){
-        alert("add");
+    $('#employee-list').on('click', '.plus', function(){
+        $('#add-employee').modal('show');
     });
 
-    $('#employee-list').on('click', '.employee-row', function(){
-        var row = $(this);
+    $('#employee-list').on('click', '.minus', function(){
+        var row = $(this).parent().parent();
         alert("delete");
         $.post('/manager/employee/' + $(this).attr('data-id'), $(this).serialize(), function (data) {
-            if (data.succss) {
+            if (data.success) {
                 console.log("SUCCESS");
                 row.remove();
                 //window.location = '/manager/employee/' + $(this).attr('data-id');
