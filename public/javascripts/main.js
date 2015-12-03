@@ -411,7 +411,7 @@ function loadManagerSales(search) {
 
             table.append(
                 $('<tr>')
-                    .append($('<td>').html(sales.ItemName))
+                    .append($('<td>').html(sales.Name))
                     .append($('<td>').html(sales.Type))
                     .append($('<td>').html('$' + sales.Price))
                     .append($('<td>').html(sales.Date))
@@ -430,7 +430,7 @@ function loadManagerSales(search) {
 
             table.append(
                 $('<tr>')
-                    .append($('<td>').html(sales.ItemName))
+                    .append($('<td>').html(sales.Name))
                     .append($('<td>').html(sales.Type))
                     .append($('<td>').html(sales.Revenue))
             );
