@@ -37,6 +37,7 @@ router.get('/login', function (req, res) {
     else
         res.render('login', {
             message: req.flash('error'),
+            register: req.query.reg ? true : false,
             title: 'Login - Big Data'
         });
 });
@@ -46,5 +47,28 @@ router.post('/login',
         failureRedirect: '/login',
         failureFlash: true })
 );
+
+router.get('/register', function (req, res) {
+    res.render('register', {
+        title: 'Register'
+    });
+});
+
+router.post('/register', function (req, res) {
+    db.query('INSERT INTO person ' +
+        'VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [req.body.SSN, req.body.LastName, req.body.FirstName, req.body.Address, req.body.ZipCode, req.body.telephone, req.body.email, req.body.password],
+        function(err){
+            if (err) {
+                res.render('register', {
+                    title: 'Register',
+                    message: 'Error - ' + err
+                });
+            } else {
+                res.redirect('/login?reg=true');
+            }
+        }
+    );
+});
 
 module.exports = router;

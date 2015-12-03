@@ -9,11 +9,15 @@
 
         <div class="col-md-5">
 
-            <% if (message && message != '') { %>
+            <% if (locals.message && message != '') { %>
                 <div class="alert alert-danger"><%= message %></div>
             <% } %>
 
-            <p>All passwords are 'hello' without the quotes right now. Try test@test.com</p>
+            <% if (locals.register && register) { %>
+            <div class="alert alert-success">Successfully registered. Welcome to Big Data! Please login below.</div>
+            <% } %>
+
+            <p>If the account has no password, the default password is 'hello' (w/o quotes).</p>
 
             <form action="/login" method="post">
                 <div class="form-group">
@@ -28,6 +32,8 @@
                     <input type="submit" value="Log In" class="btn btn-primary" />
                 </div>
             </form>
+
+            <a href="/register/"><button class="btn btn-default">Not registered yet? Create a free account.</button></a>
 
         </div>
     </div>
