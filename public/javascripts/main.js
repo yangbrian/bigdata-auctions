@@ -132,6 +132,35 @@ $(document).ready(function() {
 
 });
 
+function loadCustomerTables(){
+    $.ajax({
+        url: '/manager/employee/get',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#employee-list');
+        $.each(data, function (index, employee) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(employee.EmployeeID))
+                    .append($('<td>').html(employee.FirstName))
+                    .append($('<td>').html(employee.LastName))
+                    .append($('<td>').html(employee.StartDate))
+                    .append($('<td>').html(employee.HourlyRate))
+                    .append($('<td>').html(employee.Level))
+                    .append($('<td>').html("<span class = 'plus'> <i class='fa fa-plus'></i></span> "))
+                    .append($('<td>').html("<span class = 'minus'> <i class='fa fa-minus'></i></span>"))
+                    .append($('<td>').html("<span class = 'edit'> <i class='fa fa-pencil'></i></span>"))
+                    .attr('data-id', employee.EmployeeID)
+                    .addClass("employee-row")
+
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
 
 function  loadEmployeeTables(){
     $.ajax({
