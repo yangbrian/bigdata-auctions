@@ -110,13 +110,12 @@ router.get('/employee', auth, function (req, res) {
 
     res.render('employee', {
         title: 'Manager Dashboard',
-        user: req.user
+        user: req.user,
+        check : 1
     })
 
 
 });
-
-
 
 //getting list of employee
 router.get('/employee/get', function (req, res, next) {
@@ -132,8 +131,29 @@ router.get('/employee/get', function (req, res, next) {
 
 });
 
+//deleting a employee
+router.post('/employee/:EmployeeID', function (req, res, next) {
 
-//editing a customer
+    db.query('DELETE FROM employee ' +
+        'WHERE EmployeeID = ' + req.params.EmployeeID,
+        function (err, rows) {
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+
+
+        })
+})
+
+
+//editing a employee
 router.get('/editC/:customerID', function (req, res, next) {
 
     db.query('UPDATE customer ' +
@@ -158,38 +178,17 @@ router.get('/editC/:customerID', function (req, res, next) {
 })
 
 
-//deleting a customer
-router.post('/:customerID', function (req, res, next) {
 
-    db.query('DELETE FROM customer ' +
-        'WHERE customerID = ' + req.params.customerID,
-        function (err, rows) {
-            var data = {};
-            if (err) {
-                console.log("ERROR - " + err);
-                data.success = false;
-            } else {
-                data.success = true;
-            }
-
-
-            res.setHeader('content-type', 'application/json');
-            return res.send(JSON.stringify(data));
-
-
-        })
-})
-
-//adding new customer
-router.get('/newC', function (req, res, next) {
+//adding new employee
+router.get('/employee/new', function (req, res, next) {
 
     db.query('SELECT * FROM person ' +
         'LEFT JOIN employee on EmployeeID = person.SSN ' +
         'LEFT JOIN customer on customerID = person.SSN ',
         function (err, rows) {
             if (err) throw err;
-            res.render('customer', {
-                title: 'Customer Info',
+            res.render('employee', {
+                title: 'Manager Dashboard',
                 newCust: rows,
                 check: 2
             });
@@ -198,8 +197,8 @@ router.get('/newC', function (req, res, next) {
 });
 
 
-//adding new customer
-router.get('/newC/adding/:SSN', function (req, res, next) {
+//adding new employee
+router.get('/employee/new/:EmployeeID', function (req, res, next) {
 
 
     res.render('newCustomer', {

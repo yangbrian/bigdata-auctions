@@ -108,7 +108,60 @@ $(document).ready(function() {
     });
 
 
+    $('table').on('click', '.plus', function(){
+        alert("add");
+    });
+
+    $('#employee-list').on('click', '.employee-row', function(){
+        var row = $(this);
+        alert("delete");
+        $.post('/manager/employee/' + $(this).attr('data-id'), $(this).serialize(), function (data) {
+            if (data.succss) {
+                console.log("SUCCESS");
+                row.remove();
+                //window.location = '/manager/employee/' + $(this).attr('data-id');
+            } else {
+                console.log("FAIL");
+            }
+        });
+    });
+
+    $('table').on('click', '.edit', function(){
+        alert("edit");
+    });
+
 });
+
+
+function  loadEmployeeTables(){
+    $.ajax({
+        url: '/manager/employee/get',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#employee-list');
+        $.each(data, function (index, employee) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(employee.EmployeeID))
+                    .append($('<td>').html(employee.FirstName))
+                    .append($('<td>').html(employee.LastName))
+                    .append($('<td>').html(employee.StartDate))
+                    .append($('<td>').html(employee.HourlyRate))
+                    .append($('<td>').html(employee.Level))
+                    .append($('<td>').html("<span class = 'plus'> <i class='fa fa-plus'></i></span> "))
+                    .append($('<td>').html("<span class = 'minus'> <i class='fa fa-minus'></i></span>"))
+                    .append($('<td>').html("<span class = 'edit'> <i class='fa fa-pencil'></i></span>"))
+                    .attr('data-id', employee.EmployeeID)
+                    .addClass("employee-row")
+
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+}
 
 function deleteRow(i, id){
 
@@ -321,29 +374,7 @@ function managerBest() {
     });
 }
 
-function  loadEmployeeTables(){
-    $.ajax({
-        url: '/manager/employee/get',
-        context: document.body
-    }).done(function (data) {
-        var table = $('#employee-list');
-        $.each(data, function (index, employee) {
-
-            table.append(
-                $('<tr>')
-                    .append($('<td>').html(employee.EmployeeID))
-                    .append($('<td>').html(employee.FirstName))
-                    .append($('<td>').html(employee.LastName))
-                    .append($('<td>').html(employee.StartDate))
-                    .append($('<td>').html(employee.HourlyRate))
-                    .append($('<td>').html(employee.Level))
-            );
-        });
-
-        table.next('.loader').fadeOut();
-    });
-
-}
+/////////////////////////////////////////////////////*********************************
 
 function managerRevenue() {
     $.ajax({
