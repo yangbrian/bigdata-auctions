@@ -21,21 +21,6 @@ $(document).ready(function() {
         });
     });
 
-    $('#bid-auction').on('submit', function (e) {
-        e.preventDefault();
-
-        $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {
-            if (data.success) {
-                $('#new-bid-alert').fadeIn();
-                setTimeout(function() {
-                    location.reload();
-                }, 500);
-            } else {
-                console.log("FAIL");
-            }
-        });
-    });
-
     $('#bid-sold').on('click', function () {
 
         var buyer = $(this).data('buyer');
@@ -49,10 +34,17 @@ $(document).ready(function() {
             auction: auctionID
         }, function (data) {
             if (data.success) {
-                $('#sold-alert').fadeIn();
+                $.notify({
+                    message: 'Item SOLD to buyer ' + buyer + ' for $' + price + '!'
+                },{
+                    type: 'success',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
 
-                $('#sell-buyer').html(buyer);
-                $('#sell-price').html(price);
             } else {
                 console.log("Error selling auction.");
             }
@@ -64,10 +56,20 @@ $(document).ready(function() {
 
         $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {
             if (data.success) {
-                $('#new-bid-alert').fadeIn();
-                setTimeout(function() {
+                $.notify({
+                    message: 'You have successfully placed a bid! Good luck!'
+                },{
+                    type: 'success',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
+
+                setTimeout(function () {
                     location.reload();
-                }, 500);
+                }, 800);
             } else {
                 console.log("FAIL");
             }
