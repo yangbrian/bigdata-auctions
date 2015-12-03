@@ -55,6 +55,7 @@ $(document).ready(function() {
         window.location = '/auction/' + $(this).attr('data-id');
     })
 
+    //this opens a link to add new customer info
     $('#EditTable tr').click(function() {
         return false;
     }).dblclick(function() {
@@ -63,9 +64,34 @@ $(document).ready(function() {
         window.location = "http://localhost:4000/customer/newC/adding/" + $(this).attr('data-id');
     });
 
+    //this opens a link to edit customer
+    $('#EditCustomerTable tr').click(function() {
+        return false;
+    }).dblclick(function() {
+        $(this).attr('data-id');
+        console.log($(this).attr('data-id'));
+        window.location = "http://localhost:4000/customer/editC/" + $(this).attr('data-id');
+    });
 
 
 });
+
+function deleteRow(i, id){
+
+    $.post('/customer/' + id, $(this).serialize(), function (data) {
+        if (data.success) {
+            document.getElementById('EditCustomerTable').deleteRow(i);
+        } else {
+            console.log("FAIL");
+        }
+    });
+
+
+}
+
+function loadCustomers(id){
+
+}
 
 function loadBestSellers(id) {
     $.ajax({
@@ -199,6 +225,7 @@ function loadUserTables(id) {
     loadUserAuctionItems(id);
     loadUserItems(id);
     loadItemSuggestions(id);
+    loadCustomers(id);
 }
 
 function searchByName(name) {

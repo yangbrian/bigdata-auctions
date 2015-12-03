@@ -21,19 +21,31 @@ router.get('/', function (req, res, next) {
 
 });
 
+
 //editing a customer
-router.get('/', function (req, res, next) {
+router.get('/editC/:customerID', function (req, res, next) {
 
     db.query('UPDATE customer ' +
-        'SET Rating = ?, creditcardnum = ?, ' +
-        'WHERE customerID = ?',
-        [req.body.Rating, req.body.creditcardnum, req.params.customerID],
+    'SET Rating = ?, creditcardnum = ?, customerID = ? ' +
+    'WHERE CustomerID =  ' + req.params.customerID,
         function (err, rows) {
-            if (err)throw err;
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+            res.render('customer', {
+                title: 'Customer Info',
+                editCust: rows,
+                check: 3
+            });
 
         })
+})
 
-});
 
 //deleting a customer
 router.post('/:customerID', function (req, res, next) {
@@ -41,7 +53,18 @@ router.post('/:customerID', function (req, res, next) {
     db.query('DELETE FROM customer ' +
         'WHERE customerID = ' + req.params.customerID,
         function (err, rows) {
-            if (err)throw err;
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+
 
         })
 })

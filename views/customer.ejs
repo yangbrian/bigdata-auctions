@@ -5,7 +5,7 @@
     <div class="col-md-12">
 
         <% if(check == 1) { %>
-        <table class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
+        <table id = "EditCustomerTable" class="table tablehover" data-toggle="modal" data-target=".bs-example-modal-lg">
 
             <th><strong>Last Name</strong></th>
             <th><strong>First Name</strong></th>
@@ -15,8 +15,8 @@
             <th><strong>Email</strong></th>
 
             <% for (var i = 0; i < customers.length; i++) { %>
-            <tr class='clickable-row '>
-                <td><button data-id= "<%customers[i].customerID %>" action = "/customer"class="close"  method = "post"> </button> </td>
+            <tr data-id="<%=customers[i].SSN%>" class='clickable-row '>
+                <td><button data-id= "<%customers[i].SSN %>" onClick = "deleteRow(this.parentNode.parentNode.rowIndex, <%=customers[i].SSN%>);" class="close"  method = "post"> </button> </td>
                 <td><%= customers[i].LastName %></td>
                 <td><%= customers[i].FirstName %></td>
                 <td><%= customers[i].Address %></td>
@@ -57,11 +57,13 @@
         <% } %>
 
         <% if(check == 3) { %>
+            <h1>Hello</h1>
 
         <% } %>
 
     </div>
 
 </div>
+
 
 <% include partials/footer %>
