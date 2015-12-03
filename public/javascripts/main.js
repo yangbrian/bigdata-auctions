@@ -200,3 +200,60 @@ function loadUserTables(id) {
     loadUserItems(id);
     loadItemSuggestions(id);
 }
+
+function searchByName(name) {
+    $.ajax({
+        url: '/search/' + name + '/name/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#search-name');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumCopies))
+                    .append($('<td>').html(item.AuctionID))
+                    .append($('<td>').html(item.BidIncrement))
+                    .append($('<td>').html(item.MinimumBid))
+                    .append($('<td>').html(item.Monitor))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function searchByType(type) {
+    $.ajax({
+        url: '/search/' + type + '/type/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#search-type');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumCopies))
+                    .append($('<td>').html(item.AuctionID))
+                    .append($('<td>').html(item.BidIncrement))
+                    .append($('<td>').html(item.MinimumBid))
+                    .append($('<td>').html(item.Monitor))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadSearchTables(keyword) {
+    searchByName(keyword);
+    searchByType(keyword);
+}

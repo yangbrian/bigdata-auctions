@@ -64,7 +64,7 @@ router.post('/new', auth, function (req, res) {
 
             // TEMPORARY HARDCODED EMPLOYEE
             req.body.monitor = 1;
-            req.body.customer = req.user.CustomerID;
+            req.body.customer = req.user.SSN;
 
             // to group:
             // this callback function is executed when the query is complete,
@@ -97,6 +97,7 @@ router.post('/new', auth, function (req, res) {
 
                                     if (err) {
                                         console.log("ERROR - Error inserting auction");
+                                        console.log(err);
                                         data.success = false;
 
                                     } else {

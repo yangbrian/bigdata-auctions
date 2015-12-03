@@ -25,6 +25,7 @@ var auction = require('./routes/auction');
 var customers = require('./routes/customer');
 var db = require('./database.js').db;
 var items = require('./routes/items');
+var search = require('./routes/search');
 
 
 var app = express();
@@ -63,6 +64,7 @@ app.use('/users', users);
 app.use('/auction', auction);
 app.use('/customer', customers);
 app.use('/items',items);
+app.use('/search', search);
 
 
 
