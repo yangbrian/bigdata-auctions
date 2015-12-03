@@ -54,7 +54,7 @@ tr {
     cursor: pointer;
 }
 
-.close {
+.delete {
     display: inline-block;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -72,7 +72,7 @@ tr {
     background: #ed2715;
 }
 
-.close::before {
+.delete::before {
     display: inline-block;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -94,7 +94,7 @@ tr {
     transform: rotateZ(45deg)   ;
 }
 
-.close::after {
+.delete::after {
     display: inline-block;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -116,7 +116,7 @@ tr {
     transform: rotateZ(-45deg)   ;
 }
 
-.close:hover {
+.delete:hover {
     color: #e6e6e6;
     background: darkred;
     cursor: pointer;

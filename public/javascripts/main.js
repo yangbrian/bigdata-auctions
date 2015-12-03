@@ -36,7 +36,30 @@ $(document).ready(function() {
         });
     });
 
-    $('#bid-sold').on('submit', function (e) {
+    $('#bid-sold').on('click', function () {
+
+        var buyer = $(this).data('buyer');
+        var price = $(this).data('price');
+
+        $.post('/auction/sell/', {
+            buyer: buyer,
+            seller: $(this).data('seller'),
+            price: price,
+            item: $(this).data('item'),
+            auction: auctionID
+        }, function (data) {
+            if (data.success) {
+                $('#sold-alert').fadeIn();
+
+                $('#sell-buyer').html(buyer);
+                $('#sell-price').html(price);
+            } else {
+                console.log("Error selling auction.");
+            }
+        });
+    });
+
+    $('#bid-auction').on('submit', function (e) {
         e.preventDefault();
 
         $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {

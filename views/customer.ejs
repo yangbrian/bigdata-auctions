@@ -16,7 +16,7 @@
 
             <% for (var i = 0; i < customers.length; i++) { %>
             <tr class='clickable-row '>
-                <td><button data-id= "<%customers[i].customerID %>" action = "/customer"class="close"  method = "post"> </button> </td>
+                <td><button data-id= "<%customers[i].customerID %>" action = "/customer"class="delete"  method = "post"> </button> </td>
                 <td><%= customers[i].LastName %></td>
                 <td><%= customers[i].FirstName %></td>
                 <td><%= customers[i].Address %></td>

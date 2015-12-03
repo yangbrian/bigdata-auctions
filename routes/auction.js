@@ -137,4 +137,29 @@ router.post('/bid/:id', auth, function (req, res) {
     );
 });
 
+/**
+ * Sell the current item
+ */
+router.post('/sell/', auth, function (req, res) {
+    db.query('INSERT INTO sales ' +
+        'VALUES(?, ?, ?, NOW(), ?, ?)',
+        [req.body.buyer, req.body.seller, req.body.price, req.body.item, req.body.auction] ,
+        function (err, rows) {
+
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+
+        }
+    );
+});
+
 module.exports = router;

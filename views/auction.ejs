@@ -35,18 +35,47 @@
             <div class="col-md-3">
 
                 <form id="bid-auction" class="form-horizontal">
-                    <label class="control-label">Bid Price: </label>
-                    <input class="form-control" name="price" type="text">
+
+                    <div class="form-group">
+                        <label class="control-label">Bid Price: </label>
+                        <input class="form-control" name="price" type="text">
+                    </div>
+
 
                     <input type="hidden" name="item" value="<%= auction.ItemID %>">
 
-                    <input type="submit" class="btn btn-success" value="Bid Now">
-                    <input id = "bid-sold" type="submit" class="btn btn-success" value="Sold">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Bid Now">
+                        <input
+                            id="bid-sold"
+                            type="button"
+                            class="btn btn-warning"
+
+                            <% if (bids.length > 0) { %>
+
+                                data-buyer="<%= bids[0].CustomerID %>"
+                                data-seller="<%= auction.CustomerID %>"
+                                data-price="<%= bids[0].BidPrice %>"
+                                data-item="<%= auction.ItemID %>"
+
+                            <% } else { %>
+
+                                disabled
+                                title="Can't sell an item with no buyers"
+
+                            <% } %>
+
+                            value="Sold">
+                    </div>
 
                 </form>
 
                 <div style="display: none;" id="new-bid-alert" class="alert alert-success alert-dismissible" role="alert">
                     You have bid on this auction! Good luck.
+                </div>
+
+                <div style="display: none;" id="sold-alert" class="alert alert-success alert-dismissible" role="alert">
+                    This item has been SOLD to Buyer: <span id="sell-buyer"></span> for Price: <span id="sell-price"></span>
                 </div>
             </div>
 
@@ -78,6 +107,7 @@
 
 <script type="text/javascript">
     var auctionID = <%= auction.AuctionID %>;
+
 </script>
 <!-- /.container -->
 
