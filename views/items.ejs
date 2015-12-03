@@ -10,36 +10,121 @@
         <% if (locals.items) { %>
         <div class="col-md-12">
 
-                <h3>List of items</h3>
-                <table class="table-hover table table-striped">
-                    <tr>
-                        <th>ItemID</th>
-                        <th>Description</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>NumCompies</th>
-                    </tr>
-                    <% for (var i = 0; i < items.length; i++) {%>
+            <h3>All Items</h3>
+            <p>Comprehensive list of all items</p>
+            <table class="table-hover table table-striped">
+                <tr>
+                    <th>ItemID</th>
+                    <th>Description</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>NumCompies</th>
+                </tr>
+                <% for (var i = 0; i < items.length; i++) {%>
 
-                    <tr>
-                        <td><%= items[i].ItemID %></td>
-                        <td><%= items[i].Description %></td>
-                        <td><%= items[i].Name %></td>
-                        <td><%= items[i].Type %></td>
-                        <td><%= items[i].NumCopies %></td>
-                    </tr>
+                <tr>
+                    <td><%= items[i].ItemID %></td>
+                    <td><%= items[i].Description %></td>
+                    <td><%= items[i].Name %></td>
+                    <td><%= items[i].Type %></td>
+                    <td><%= items[i].NumCopies %></td>
+                </tr>
 
-                    <% } %>
-                </table>
+                <% } %>
+            </table>
         </div>
         <% } %>
 
         <% if (locals.sales) { %>
 
+            <h2>Sales Search for - <%= search %></j2>
 
-        <script type="text/javascript">
-            loadManagerSales(<%= req.query.search %>, <%= req.query.type %>);
-        </script>
+            <h3>By Customer Name</h3>
+            <h4>Sales</h4>
+            <table id="customer-sales-table" class="table table-hover">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Sales Price</th>
+                    <th>Sales Date</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading sales...</p>
+            </div>
+
+            <h4>Revenue</h4>
+            <table id="customer-revenue-table" class="table table-hover">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Revenue Generated</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading sales...</p>
+            </div>
+
+            <h3>By Item Name</h3>
+            <h4>Sales</h4>
+            <table id="item-sales-table" class="table table-hover">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Sales Price</th>
+                    <th>Sales Date</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading sales...</p>
+            </div>
+
+            <h4>Revenue</h4>
+            <table id="item-revenue-table" class="table table-hover">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Revenue Generated</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading sales...</p>
+            </div>
+
+            <h3>By Item Type </h3>
+            <h4>Sales</h4>
+            <table id="type-sales-table" class="table table-hover">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Sales Price</th>
+                    <th>Sales Date</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading sales...</p>
+            </div>
+
+            <h4>Revenue</h4>
+            <table id="type-revenue-table" class="table table-hover">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Revenue Generated</th>
+                </tr>
+
+            </table>
+            <div class="loader">
+                <p>Loading sales...</p>
+            </div>
+
+            <script type="text/javascript">
+                loadManagerSales("<%= search %>");
+            </script>
         <% } %>
 </div>
 </div>

@@ -364,3 +364,115 @@ function loadManagerTables() {
     managerBest();
     managerRevenue();
 }
+
+function loadManagerSales(search) {
+    $.ajax({
+        url: '/manager/sales/customer/' + search,
+        context: document.body
+    }).done(function (data) {
+        var table = $('#customer-sales-table');
+        $.each(data, function (index, sales) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(sales.ItemName))
+                    .append($('<td>').html(sales.Type))
+                    .append($('<td>').html('$' + sales.Price))
+                    .append($('<td>').html(sales.Date))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+    $.ajax({
+        url: '/manager/sales/revenue/customer/' + search,
+        context: document.body
+    }).done(function (data) {
+        var table = $('#customer-revenue-table');
+        $.each(data, function (index, sales) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(sales.CustomerName))
+                    .append($('<td>').html(sales.Revenue))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+    $.ajax({
+        url: '/manager/sales/item/' + search,
+        context: document.body
+    }).done(function (data) {
+        var table = $('#item-sales-table');
+        $.each(data, function (index, sales) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(sales.ItemName))
+                    .append($('<td>').html(sales.Type))
+                    .append($('<td>').html('$' + sales.Price))
+                    .append($('<td>').html(sales.Date))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+    $.ajax({
+        url: '/manager/sales/revenue/item/' + search,
+        context: document.body
+    }).done(function (data) {
+        var table = $('#item-revenue-table');
+        $.each(data, function (index, sales) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(sales.ItemName))
+                    .append($('<td>').html(sales.Type))
+                    .append($('<td>').html(sales.Revenue))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+    $.ajax({
+        url: '/manager/sales/type/' + search,
+        context: document.body
+    }).done(function (data) {
+        var table = $('#type-sales-table');
+        $.each(data, function (index, sales) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(sales.Name))
+                    .append($('<td>').html(sales.Type))
+                    .append($('<td>').html('$' + sales.Price))
+                    .append($('<td>').html(sales.Date))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+    $.ajax({
+        url: '/manager/sales/revenue/type/' + search,
+        context: document.body
+    }).done(function (data) {
+        var table = $('#type-revenue-table');
+        $.each(data, function (index, sales) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(sales.Name))
+                    .append($('<td>').html(sales.Type))
+                    .append($('<td>').html(sales.Revenue))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
