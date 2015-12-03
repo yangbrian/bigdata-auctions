@@ -36,6 +36,21 @@ $(document).ready(function() {
         });
     });
 
+    $('#bid-sold').on('submit', function (e) {
+        e.preventDefault();
+
+        $.post('/auction/bid/' + auctionID, $(this).serialize(), function (data) {
+            if (data.success) {
+                $('#new-bid-alert').fadeIn();
+                setTimeout(function() {
+                    location.reload();
+                }, 500);
+            } else {
+                console.log("FAIL");
+            }
+        });
+    });
+
     $('#user-auctions').on('click', '.auction-row', function () {
         window.location = '/auction/' + $(this).attr('data-id');
     })
