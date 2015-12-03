@@ -46,7 +46,16 @@ $(document).ready(function() {
                 });
 
             } else {
-                console.log("Error selling auction.");
+                $.notify({
+                    message: 'Error selling item. Is it already sold?'
+                },{
+                    type: 'danger',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
             }
         });
     });
@@ -259,4 +268,30 @@ function searchByType(type) {
 function loadSearchTables(keyword) {
     searchByName(keyword);
     searchByType(keyword);
+}
+
+function managerBest() {
+    $.ajax({
+        url: '/manager/best/',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#best-sellers');
+        $.each(data, function (index, item) {
+
+            table.append(
+                $('<tr>')
+                    .append($('<td>').html(item.ItemID))
+                    .append($('<td>').html(item.Name))
+                    .append($('<td>').html(item.Description))
+                    .append($('<td>').html(item.Type))
+                    .append($('<td>').html(item.NumberSold))
+            );
+        });
+
+        table.next('.loader').fadeOut();
+    });
+}
+
+function loadManagerTables() {
+    managerBest();
 }
