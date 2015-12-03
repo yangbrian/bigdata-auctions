@@ -196,3 +196,8 @@ tr {
 #month-select select, #month-select input {
     width: 50%;
 }
+
+table i:hover {
+    cursor: pointer;
+    opacity: 0.4;
+}
