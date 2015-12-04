@@ -82,6 +82,16 @@ $(document).ready(function() {
                 }, 800);
             } else {
                 console.log("FAIL");
+                $.notify({
+                    message: 'Sorry, not a valid bid!'
+                },{
+                    type: 'danger',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+                });
             }
         });
     });
