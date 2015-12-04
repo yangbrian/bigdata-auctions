@@ -111,11 +111,16 @@ $(document).ready(function() {
     //adding employee
     $('#employee-list').on('click', '.plus', function(){
         $('#add-employee').modal('show');
-        var row = $(this).parent().parent();
-        $.post('/manager/employee/' + $(this).attr('data-id'), $(this).serialize(), function (data) {
+
+
+    });
+
+    //adding new employee
+    $('#addEmployee').on('submit', function(e){
+        e.preventDefault();
+        $.post('/manager/employee/', $(this).serialize(), function (data) {
             if (data.success) {
                 console.log("SUCCESS");
-                row.remove();
 
             } else {
                 console.log("FAIL");
@@ -141,10 +146,17 @@ $(document).ready(function() {
     //adding customer
     $('#customer-list').on('click', '.plus', function(){
         $('#add-customer').modal('show');
-        var row = $(this).parent().parent();
-        $.post('/customer/' + $(this).attr('data-id'), $(this).serialize(), function (data) {
+
+
+    });
+
+    //adding new employee
+    $('#addCustomer').on('submit', function(e){
+        e.preventDefault();
+        $.post('/customer', $(this).serialize(), function (data) {
             if (data.success) {
                 console.log("SUCCESS");
+
             } else {
                 console.log("FAIL");
             }
@@ -205,6 +217,34 @@ function loadCustomerTables(){
 
 }
 
+
+function loadNewCustomerTable(){
+
+    $.ajax({
+        url: '/customer/new',
+        context: document.body
+    }).done(function (data) {
+        var table = $('#newCustomer-list');
+        $.each(data, function (index, customer) {
+            if(!customer.Level && !customer.creditcardnum) {
+                table.append(
+                    $('<tr>')
+                        .append($('<td>').html(customer.SSN))
+                        .append($('<td>').html(customer.FirstName))
+                        .append($('<td>').html(customer.LastName))
+                        .append($('<td>').html(customer.Address))
+                        .append($('<td>').html(customer.ZipCode))
+                        .append($('<td>').html(customer.telephone))
+                        .append($('<td>').html(customer.email))
+                );
+            }
+        });
+
+        table.next('.loader').fadeOut();
+    });
+
+}
+
 function loadNewEmployeeTable(){
 
     $.ajax({
@@ -213,17 +253,18 @@ function loadNewEmployeeTable(){
     }).done(function (data) {
         var table = $('#newEmployee-list');
         $.each(data, function (index, employee) {
-
-            table.append(
-                $('<tr>')
-                    .append($('<td>').html(employee.EmployeeID))
-                    .append($('<td>').html(employee.FirstName))
-                    .append($('<td>').html(employee.LastName))
-                    .append($('<td>').html(employee.StartDate))
-                    .append($('<td>').html(employee.HourlyRate))
-                    .append($('<td>').html(employee.Level))
-
-            );
+            if(!employee.Level && !employee.creditcardnum) {
+                table.append(
+                    $('<tr>')
+                        .append($('<td>').html(employee.SSN))
+                        .append($('<td>').html(employee.FirstName))
+                        .append($('<td>').html(employee.LastName))
+                        .append($('<td>').html(employee.Address))
+                        .append($('<td>').html(employee.ZipCode))
+                        .append($('<td>').html(employee.telephone))
+                        .append($('<td>').html(employee.email))
+                );
+            }
         });
 
         table.next('.loader').fadeOut();

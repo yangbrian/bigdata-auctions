@@ -186,39 +186,31 @@ router.get('/employee/new', function (req, res, next) {
         'LEFT JOIN employee on EmployeeID = person.SSN ' +
         'LEFT JOIN customer on customerID = person.SSN ',
         function (err, rows) {
-            if (err) throw err;
-            res.render('employee', {
-                title: 'Manager Dashboard',
-                newCust: rows,
-                check: 2
-            });
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(rows));
 
         });
 });
 
 
 //adding new employee
-router.get('/employee/new/:EmployeeID', function (req, res, next) {
+router.post('/employee/', function (req, res, next) {
 
-
-    res.render('newCustomer', {
-        title: 'Customer Info',
-        SSN: req.params.SSN
-    });
-
-
-});
-
-//adding new employee
-router.post('/newC/adding/:SSN', function (req, res, next) {
-
-    db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
-        'VALUES (?,?,?) ',
-        [req.body.Rating, req.body.creditcardnum, req.params.SSN],
+    db.query('INSERT INTO employee (StartDate, HourlyRate, Level, EmployeeID) ' +
+        'VALUES (?,?,?,?) ',
+        [req.body.StartDate, req.body.HourlyRate, req.body.Level, req.body.EmployeeID],
         function (err, rows) {
-            if (err) throw err;
-            res.redirect('/customer');
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
         });
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
 });
 
 

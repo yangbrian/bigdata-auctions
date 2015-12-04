@@ -75,61 +75,92 @@ router.get('/editC/:customerID', function (req, res, next) {
         })
 })
 
-//adding new customer
-router.get('/newC', function (req, res, next) {
+////adding new customer
+//router.get('/newC', function (req, res, next) {
+//
+//    db.query('SELECT * FROM person ' +
+//        'LEFT JOIN employee on EmployeeID = person.SSN ' +
+//        'LEFT JOIN customer on customerID = person.SSN ',
+//        function (err, rows) {
+//            if (err) throw err;
+//            res.render('customer', {
+//                title: 'Customer Info',
+//                newCust: rows,
+//                check: 2
+//            });
+//
+//        });
+//});
+//
+//
+////adding new customer
+//router.get('/newC/adding/:SSN', function (req, res, next) {
+//
+//
+//    res.render('newCustomer', {
+//        title: 'Customer Info',
+//        SSN: req.params.SSN
+//    });
+//
+//
+//});
+//
+////adding new customer
+//router.post('/newC/adding/:SSN', function (req, res, next) {
+//
+//    db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
+//        'VALUES (?,?,?) ',
+//        [req.body.Rating, req.body.creditcardnum, req.params.SSN],
+//        function (err, rows) {
+//            if (err) throw err;
+//            res.redirect('/customer');
+//        });
+//});
+//
+////adding new customer
+//router.post('/:SSN', function (req, res, next) {
+//
+//    db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
+//        'VALUES (?,?,?) ',
+//        [req.body.Rating, req.body.creditcardnum, req.params.SSN],
+//        function (err, rows) {
+//            if (err) throw err;
+//            res.redirect('/customer');
+//        });
+//});
+
+//adding new employee
+router.get('/new', function (req, res, next) {
 
     db.query('SELECT * FROM person ' +
         'LEFT JOIN employee on EmployeeID = person.SSN ' +
         'LEFT JOIN customer on customerID = person.SSN ',
         function (err, rows) {
-            if (err) throw err;
-            res.render('customer', {
-                title: 'Customer Info',
-                newCust: rows,
-                check: 2
-            });
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(rows));
 
         });
 });
 
 
-//adding new customer
-router.get('/newC/adding/:SSN', function (req, res, next) {
+//adding new employee
+router.post('/', function (req, res, next) {
 
-
-    res.render('newCustomer', {
-        title: 'Customer Info',
-        SSN: req.params.SSN
-    });
-
-
-});
-
-//adding new customer
-router.post('/newC/adding/:SSN', function (req, res, next) {
-
-    db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
+    db.query('INSERT INTO customer (Rating, creditcardnum, CustomerID) ' +
         'VALUES (?,?,?) ',
-        [req.body.Rating, req.body.creditcardnum, req.params.SSN],
+        [req.body.Rating, req.body.creditcardnum, req.body.CustomerID],
         function (err, rows) {
-            if (err) throw err;
-            res.redirect('/customer');
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
         });
-});
 
-
-
-
-//adding new customer
-router.post('/:SSN', function (req, res, next) {
-
-    db.query('INSERT INTO customer (Rating, creditcardnum, customerID) ' +
-        'VALUES (?,?,?) ',
-        [req.body.Rating, req.body.creditcardnum, req.params.SSN],
-        function (err, rows) {
-            if (err) throw err;
-            res.redirect('/customer');
-        });
+    res.setHeader('content-type', 'application/json');
+    return res.send(JSON.stringify(data));
 });
 
 
