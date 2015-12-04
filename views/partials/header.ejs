@@ -64,12 +64,12 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Login (resets on server restart)</a></li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>  <%= (locals.user) ? (user.FirstName + ' ' + user.LastName) : 'Log In' %>
+                    <% if (locals.user) { %>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span>  <%= user.FirstName + ' ' + user.LastName %>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <% if (locals.user) { %>
+
                             <li>
                                 <a href="/users/<%= user.SSN %>">My Profile</a>
                             </li>
@@ -96,8 +96,18 @@
                                     <a href="/customer/">Customers</a>
                                 </li>
                             <% } %>
-                        <% } %>
+
+                        <li>
+                            <a href="/logout/">Logout</a>
+                        </li>
                     </ul>
+                        <% } else { %>
+
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="/login/"><span class="glyphicon glyphicon-user"></span>  Login
+                        <span class="caret"></span></a>
+
+                        <% } %>
+
                 </li>
             </ul>
 
