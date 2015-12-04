@@ -31,7 +31,8 @@ $(document).ready(function() {
             seller: $(this).data('seller'),
             price: price,
             item: $(this).data('item'),
-            auction: auctionID
+            auction: auctionID,
+            reserve: $(this).data('reserve')
         }, function (data) {
             if (data.success) {
                 $.notify({
@@ -122,7 +123,7 @@ $(document).ready(function() {
             if (data.success) {
                 console.log("SUCCESS");
 
-            } else {
+            } else {req
                 console.log("FAIL");
             }
         });
@@ -174,7 +175,24 @@ $(document).ready(function() {
 
     //edit customer
     $('#customer-list').on('click', '.edit', function(){
+        var row = $(this).parent().parent();
+        console.log(row.attr('data-id'));
         $('#edit-customer').modal('show');
+        $.ajax('/customer/get/' + row.attr('data-id')).done( function (data) {
+            //console.log(customer);
+            $('#card-number2').val(data.customer.creditcardnum);
+            $('#customer-rating2').val(data.customer.Rating);
+            $('#customer-id2').val(row.attr('data-id'));
+        });
+    });
+
+    $('#edit-customer-form').submit(function (e) {
+        e.preventDefault();
+
+        $.post('/customer/edit2/', $(this).serialize(), function() {
+            $('#edit-customer').modal('show');
+            location.reload();
+        });
     });
 
     //delete customer

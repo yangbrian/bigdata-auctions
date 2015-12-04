@@ -78,8 +78,8 @@ router.post('/new', auth, function (req, res) {
                 var id = rows[0]['LAST_INSERT_ID()'];
 
                 // add auction of that item
-                db.query('INSERT INTO auction (BidIncrement, MinimumBid, CopiesSold, Monitor, ItemID)' +
-                    'VALUES (?, ?, ?, ?, ?)',
+                db.query('INSERT INTO auction (BidIncrement, MinimumBid, CopiesSold, Monitor, ItemID, MaxBid)' +
+                    'VALUES (?, ?, ?, ?, ?, 0)',
                     [req.body.increment, req.body.minimum, req.body.copies, req.body.monitor, id],
                     function (err, rows) {
 
@@ -119,28 +119,82 @@ router.post('/new', auth, function (req, res) {
 
 router.post('/bid/:id', auth, function (req, res) {
 
+    var newMax = false;
+
+    req.body.price = parseInt(req.body.price);
+    req.body.min = parseInt(req.body.min);
+    req.body.high = parseInt(req.body.high);
+    req.body.max = parseInt(req.body.max);
+    req.body.increment = parseInt(req.body.increment);
+
+    if (req.body.price < (req.body.min + req.body.increment)) {
+        console.log(req.body.price);
+        console.log(req.body.min + req.body.increment);
+        var data = {};
+        data.success = false;
+
+        res.setHeader('content-type', 'application/json');
+        return res.send(JSON.stringify(data));
+    }
+
+    if (req.body.price < req.body.high) {
+        req.user.SSN = req.body.max;
+        console.log(req.body.max);
+
+        if (req.body.price + req.body.increment < req.body.high) {
+            req.body.price = req.body.price + req.body.increment;
+        } else {
+            req.body.price = req.body.high;
+        }
+    } else if (req.body.price == req.body.high) {
+        req.user.SSN = req.body.max;
+    } else {
+        // new max bid
+        newMax = true;
+        req.body.high = req.body.price;
+        req.body.price = req.body.min + req.body.increment;
+
+        console.log("NEW MAX BID");
+
+    }
+
     db.query('INSERT INTO bid VALUES (?, ?, ?, NOW(), ?)',
         [req.user.SSN, req.params.id, req.body.item, req.body.price],
         function (err, rows) {
-            var data = {};
-            if (err) {
-                console.log("ERROR - " + err);
-                data.success = false;
-            } else {
-                data.success = true;
-            }
+
+            db.query('UPDATE auction SET MinimumBid = ? WHERE AuctionID = ?',
+            [req.body.price, req.params.id], function (err, rows) {
+                    var data = {};
+                    if (err) {
+                        console.log("ERROR - " + err);
+                        data.success = false;
+                    } else {
+                        data.success = true;
+
+                        if (newMax)
+                            newMaxBid(req.params.id, req.body.high);
+                    }
 
 
-            res.setHeader('content-type', 'application/json');
-            return res.send(JSON.stringify(data));
+                    res.setHeader('content-type', 'application/json');
+                    return res.send(JSON.stringify(data));
+                })
+
         }
     );
 });
+
+function newMaxBid(auctionID, maxBid) {
+    console.log("NEW MAX BID" + maxBid);
+    db.query('UPDATE auction SET MaxBid = ? WHERE AuctionID = ?',
+    [maxBid, auctionID]);
+}
 
 /**
  * Sell the current item
  */
 router.post('/sell/', auth, function (req, res) {
+
     db.query('INSERT INTO sales ' +
         'VALUES(?, ?, ?, NOW(), ?, ?)',
         [req.body.buyer, req.body.seller, req.body.price, req.body.item, req.body.auction] ,

@@ -28,7 +28,6 @@
                     <li>NumCopies: <%- auction.NumCopies %></li>
                     <li>Current Bid: $<%= auction.MinimumBid %></li>
                     <li>Minimum Increment: $<%= auction.BidIncrement %></li>
-                    <li>Reserve Price: $<%= auction.ReservePrice %></li>
                 </ul>
             </div>
 
@@ -41,8 +40,11 @@
                         <input class="form-control" name="price" type="text">
                     </div>
 
-
+                    <input type="hidden" name="min" value="<%= auction.MinimumBid %>">
                     <input type="hidden" name="item" value="<%= auction.ItemID %>">
+                    <input type="hidden" name="high" value="<%= bids[0] ? bids[0].BidPrice : 0 %>">
+                    <input type="hidden" name="max" value="<%= bids[0] ? bids[0].CustomerID : 0  %>">
+                    <input type="hidden" name="increment" value="<%= auction.BidIncrement %>">
 
                     <div class="form-group">
                         <input type="submit" class="btn btn-success" value="Bid Now">

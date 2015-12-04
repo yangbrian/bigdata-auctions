@@ -14,6 +14,26 @@ router.get('/', function (req, res) {
 
 });
 
+
+router.post('/edit2/', function (req, res) {
+    console.log("HEY");
+    console.log(req.body);
+    db.query('UPDATE customer SET Rating = ?, creditcardnum = ? WHERE CustomerID = ?',
+        [req.body.rate, req.body.cardNumber, req.body.customerId], function (err, rows) {
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+        });
+});
+
+
 //getting list of customers mailing lists
 router.get('/get', function (req, res, next) {
 
@@ -21,7 +41,6 @@ router.get('/get', function (req, res, next) {
         'INNER JOIN customer on person.SSN = customer.CustomerID',
         function (err, rows) {
             res.setHeader('content-type', 'application/json');
-            console.log(rows);
             return res.send(JSON.stringify(rows));
 
         }
@@ -73,7 +92,28 @@ router.get('/editC/:customerID', function (req, res, next) {
             });
 
         })
-})
+});
+
+router.get('/get/:customer', function (req, res) {
+   db.query('SELECT * from customer WHERE CustomerID=?', [req.params.customer],
+   function (err, rows) {
+       var data = {};
+       if (rows.length > 0) {
+           data = {
+                success: true,
+               customer: rows[0]
+           }
+       } else {
+           data = {
+               success : false
+           }
+       }
+
+
+       res.setHeader('content-type', 'application/json');
+       return res.send(JSON.stringify(data));
+   })
+});
 
 //adding new employee
 router.get('/new', function (req, res, next) {

@@ -146,13 +146,13 @@
             <div class="modal-body">
                 <p>Edit a customer</p>
 
-                <form action="/" method="post" class="form-horizontal">
+                <form id="edit-customer-form" action="/" method="post" class="form-horizontal">
 
                     <div class="form-group">
                         <label for="card-number" class="col-sm-2 control-label">Credit Card #:</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="cardNumber" id="card-number"
+                            <input type="text" class="form-control" name="cardNumber" id="card-number2"
                                    placeholder="123456789">
                         </div>
                     </div>
@@ -161,9 +161,11 @@
                         <label for="customer-rating" class="col-sm-2 control-label">Customer Rating</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="rate" id="customer-rating" placeholder="0">
+                            <input type="text" class="form-control" name="rate" id="customer-rating2" placeholder="0">
                         </div>
                     </div>
+
+                    <input name="customerId" type="hidden" id="customer-id2" value="">
 
 
                     <div class="form-group">
