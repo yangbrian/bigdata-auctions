@@ -154,11 +154,11 @@ router.post('/employee/:EmployeeID', function (req, res, next) {
 
 
 //editing a employee
-router.get('/editC/:customerID', function (req, res, next) {
+router.get('/employee/EmployeeID', function (req, res, next) {
 
-    db.query('UPDATE customer ' +
-        'SET Rating = ?, creditcardnum = ?, customerID = ? ' +
-        'WHERE CustomerID =  ' + req.params.customerID,
+    db.query('UPDATE employee ' +
+        'SET StartDate = ?, HourlyRate = ?, Level = ?, EmployeeID = ? ' +
+        'WHERE EmployeeID =  ' + req.params.employeeID,
         function (err, rows) {
             var data = {};
             if (err) {
@@ -168,11 +168,8 @@ router.get('/editC/:customerID', function (req, res, next) {
                 data.success = true;
             }
 
-            res.render('customer', {
-                title: 'Customer Info',
-                editCust: rows,
-                check: 3
-            });
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
 
         })
 })

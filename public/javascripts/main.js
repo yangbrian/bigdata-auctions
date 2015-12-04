@@ -149,6 +149,8 @@ $(document).ready(function() {
         $('#edit-employee').modal('show');
     });
 
+
+
     //adding customer
     $('#customer-list').on('click', '.plus', function(){
         $('#add-customer').modal('show');
