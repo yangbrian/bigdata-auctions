@@ -127,6 +127,8 @@ router.post('/bid/:id', auth, function (req, res) {
     req.body.max = parseInt(req.body.max);
     req.body.increment = parseInt(req.body.increment);
 
+    req.body.SSN = req.user.SSN;
+
     if (req.body.price < (req.body.min + req.body.increment)) {
         console.log(req.body.price);
         console.log(req.body.min + req.body.increment);
@@ -138,7 +140,7 @@ router.post('/bid/:id', auth, function (req, res) {
     }
 
     if (req.body.price < req.body.high) {
-        req.user.SSN = req.body.max;
+        req.body.SSN = req.body.max;
         console.log(req.body.max);
 
         if (req.body.price + req.body.increment < req.body.high) {
@@ -147,7 +149,7 @@ router.post('/bid/:id', auth, function (req, res) {
             req.body.price = req.body.high;
         }
     } else if (req.body.price == req.body.high) {
-        req.user.SSN = req.body.max;
+        req.body.SSN = req.body.max;
     } else {
         // new max bid
         newMax = true;
@@ -159,7 +161,7 @@ router.post('/bid/:id', auth, function (req, res) {
     }
 
     db.query('INSERT INTO bid VALUES (?, ?, ?, NOW(), ?)',
-        [req.user.SSN, req.params.id, req.body.item, req.body.price],
+        [req.body.SSN, req.params.id, req.body.item, req.body.price],
         function (err, rows) {
 
             db.query('UPDATE auction SET MinimumBid = ? WHERE AuctionID = ?',

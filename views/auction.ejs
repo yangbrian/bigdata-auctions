@@ -42,7 +42,7 @@
 
                     <input type="hidden" name="min" value="<%= auction.MinimumBid %>">
                     <input type="hidden" name="item" value="<%= auction.ItemID %>">
-                    <input type="hidden" name="high" value="<%= bids[0] ? bids[0].BidPrice : 0 %>">
+                    <input type="hidden" name="high" value="<%= auction.MaxBid %>">
                     <input type="hidden" name="max" value="<%= bids[0] ? bids[0].CustomerID : 0  %>">
                     <input type="hidden" name="increment" value="<%= auction.BidIncrement %>">
 
