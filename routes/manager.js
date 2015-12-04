@@ -30,6 +30,30 @@ router.get('/items/', auth, function (req, res) {
     })
 });
 
+
+
+//editing a employee
+router.post('/employee/edit/', function (req, res, next) {
+
+    db.query('UPDATE employee ' +
+        'SET StartDate = ?, HourlyRate = ?, Level = ?' +
+        'WHERE EmployeeID =  ?',
+        [req.body.StartDate, req.body.HourlyRate, req.body.Level, req.body.EmployeeID],
+        function (err, rows) {
+            var data = {};
+            if (err) {
+                console.log("ERROR - " + err);
+                data.success = false;
+            } else {
+                data.success = true;
+            }
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+
+        })
+})
+
 /**
  * Get Best Sellers List
  */
@@ -131,6 +155,28 @@ router.get('/employee/get', function (req, res, next) {
 
 });
 
+
+router.get('/employee/get/:employee', function (req, res) {
+    db.query('SELECT * from employee WHERE EmployeeID=?', [req.params.employee],
+        function (err, rows) {
+            var data = {};
+            if (rows.length > 0) {
+                data = {
+                    success: true,
+                    employee: rows[0]
+                }
+            } else {
+                data = {
+                    success : false
+                }
+            }
+
+
+            res.setHeader('content-type', 'application/json');
+            return res.send(JSON.stringify(data));
+        })
+});
+
 //deleting a employee
 router.post('/employee/:EmployeeID', function (req, res, next) {
 
@@ -152,27 +198,6 @@ router.post('/employee/:EmployeeID', function (req, res, next) {
         })
 })
 
-
-//editing a employee
-router.get('/employee/EmployeeID', function (req, res, next) {
-
-    db.query('UPDATE employee ' +
-        'SET StartDate = ?, HourlyRate = ?, Level = ?, EmployeeID = ? ' +
-        'WHERE EmployeeID =  ' + req.params.employeeID,
-        function (err, rows) {
-            var data = {};
-            if (err) {
-                console.log("ERROR - " + err);
-                data.success = false;
-            } else {
-                data.success = true;
-            }
-
-            res.setHeader('content-type', 'application/json');
-            return res.send(JSON.stringify(data));
-
-        })
-})
 
 
 

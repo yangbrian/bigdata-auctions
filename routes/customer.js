@@ -2,13 +2,15 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../database.js').db;
+var auth = require('../database.js').auth;
 
 //gets the customer page
-router.get('/', function (req, res) {
+router.get('/', auth, function (req, res) {
 
     res.render('customer', {
         title: 'Customer Rep Dashboard',
-        check : 1
+        check : 1,
+        user: req.user
     })
 
 

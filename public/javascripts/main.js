@@ -122,6 +122,7 @@ $(document).ready(function() {
         $.post('/manager/employee/', $(this).serialize(), function (data) {
             if (data.success) {
                 console.log("SUCCESS");
+                location.reload();
 
             } else {req
                 console.log("FAIL");
@@ -148,9 +149,25 @@ $(document).ready(function() {
     //edit employee
     $('#employee-list').on('click', '.edit', function(){
         $('#edit-employee').modal('show');
+        var row = $(this).parent().parent();
+        console.log(row.attr('data-id'));
+        $.ajax('/manager/employee/get/' + row.attr('data-id')).done( function (data) {
+            //console.log(customer);
+            $('#start-date2').val(data.employee.StartDate);
+            $('#hourly-rate2').val(data.employee.HourlyRate);
+            $('#employee-level2').val(data.employee.Level);
+            $('#employee-id2').val(data.employee.EmployeeID);
+        });
     });
 
 
+    $('#edit-employee-form').submit(function(e) {
+        e.preventDefault();
+
+        $.post('/manager/employee/edit/', $(this).serialize(), function() {
+            location.reload();
+        });
+    })
 
     //adding customer
     $('#customer-list').on('click', '.plus', function(){
