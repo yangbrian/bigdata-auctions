@@ -139,8 +139,14 @@ $(document).ready(function() {
 
             } else {
                 console.log("FAIL");
+                alert("Employee is being used");
             }
         });
+    });
+
+    //edit employee
+    $('#employee-list').on('click', '.edit', function(){
+        $('#edit-employee').modal('show');
     });
 
     //adding customer
@@ -150,7 +156,7 @@ $(document).ready(function() {
 
     });
 
-    //adding new employee
+    //adding new customer
     $('#addCustomer').on('submit', function(e){
         e.preventDefault();
         $.post('/customer', $(this).serialize(), function (data) {
@@ -179,6 +185,7 @@ $(document).ready(function() {
                 row.remove();
             } else {
                 console.log("FAIL");
+                alert("Customer is being used");
             }
         });
     });
