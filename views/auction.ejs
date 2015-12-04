@@ -40,6 +40,7 @@
                         <input class="form-control" name="price" type="text">
                     </div>
 
+                    <!-- Pretty terrible way to do this, but limited time and works for now -->
                     <input type="hidden" name="min" value="<%= auction.MinimumBid %>">
                     <input type="hidden" name="item" value="<%= auction.ItemID %>">
                     <input type="hidden" name="high" value="<%= auction.MaxBid %>">
